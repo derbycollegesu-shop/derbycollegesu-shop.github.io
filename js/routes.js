@@ -30,7 +30,7 @@ angular.module('app.routes', [])
     controller: 'logInCtrl'
   })
 
-$urlRouterProvider.otherwise('/page1')
+$urlRouterProvider.otherwise('/loginpage')
 
 
 });

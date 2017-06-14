@@ -25,6 +25,7 @@ function (authService, dataService, $scope, $stateParams) {
     // console.log(dataService.data[$stateParams.id].id);
     var d = $scope.data.line_items;
     d = "{" + d + "}";
+    d = d.replace(/\n\n/g,"},{");
     d = d.replace(/\n/g,"\",\"");
     d = d.replace(/NU:/g,"NU");
     d = d.replace(/: /g,"\":\"");
