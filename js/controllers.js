@@ -13,6 +13,10 @@ function (authService, dataService, $scope, $stateParams) {
         $scope.data = newArr;
         $scope.$apply();
     });
+    $scope.logout = function(){
+        firebase.auth().signOut();
+    }
+    
 }])
    
 .controller('orderPageCtrl', ['authService', 'dataService', '$scope', '$stateParams', 'Gravatar', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller

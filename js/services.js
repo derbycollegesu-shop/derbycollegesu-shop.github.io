@@ -14,12 +14,21 @@ angular.module('app.services', [])
     var myLoginPopup;
     //console.log($state);
     
-    
+    firebase.auth().signInWithPopup(new firebase.auth.EmailAuthProvider);
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             //console.log('user is now logged in and popup should close');
+            console.log(user);
             userLoggedIn = true;
             if(myLoginPopup){myLoginPopup.close();}
+            user.reauthenticate();
+//             user.sendEmailVerification().then(function() {
+//   // Email sent.
+//   console.log('email sent');
+// }, function(error) {
+//   // An error happened.
+//   console.log('email NOT sent');
+// });
             $state.go('ordersPage');
         } else {
             userLoggedIn = false;
