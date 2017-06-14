@@ -44,19 +44,8 @@ function (authService, dataService, $scope, $stateParams) {
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams, authService) {
-    $scope.userDetails = [];
-    aService = authService;
-    
-    $scope.logIn = function(){
-        aService.logIn($scope.userDetails.userEmail,$scope.userDetails.userPassword);
-    };
-    
     $scope.logOut = function(){
-        firebase.auth().signOut().then(function() {
-  // Sign-out successful.
-}).catch(function(error) {
-  // An error happened.
-});
-    }
+        firebase.auth().signOut();
+    };
 }])
  

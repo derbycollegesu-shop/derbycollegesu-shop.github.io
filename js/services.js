@@ -16,15 +16,13 @@ angular.module('app.services', [])
     
     
     firebase.auth().onAuthStateChanged(function(user) {
-        //console.log(user);
         if (user) {
-            //console.log('user is now logged in and popup should close');
+            console.log('user is now logged in and popup should close');
             userLoggedIn = true;
-            myLoginPopup.close();
+            if(myLoginPopup){myLoginPopup.close();}
             $state.go('ordersPage');
         } else {
             userLoggedIn = false;
-            //var popUped = true;
             if($state.current.name !== 'logIn'){
                 $state.go('logIn');
             }
@@ -53,7 +51,6 @@ angular.module('app.services', [])
                     }
                  ]
               });
-            
         }
     });
     
