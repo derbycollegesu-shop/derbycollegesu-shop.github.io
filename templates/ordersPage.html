@@ -1,0 +1,9 @@
+<ion-view title="Orders Page" hide-nav-bar="true" id="page1">
+  <ion-content padding="true" class="manual-ios-statusbar-padding">
+    <ion-list id="ordersPage-list1">
+      <ion-item id="ordersPage-list-item1" ui-sref="orderPage({&quot;id&quot;:&quot;&quot;+item.id+&quot;&quot;})" ng-repeat="item in data | orderBy:number:true">{{item.number}}
+        <span class="item-note">{{item.status}}</span>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
