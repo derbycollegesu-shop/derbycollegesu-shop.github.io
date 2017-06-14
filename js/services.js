@@ -17,7 +17,7 @@ angular.module('app.services', [])
     
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            console.log('user is now logged in and popup should close');
+            //console.log('user is now logged in and popup should close');
             userLoggedIn = true;
             if(myLoginPopup){myLoginPopup.close();}
             $state.go('ordersPage');

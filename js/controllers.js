@@ -15,14 +15,15 @@ function (authService, dataService, $scope, $stateParams) {
     });
 }])
    
-.controller('orderPageCtrl', ['authService', 'dataService', '$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('orderPageCtrl', ['authService', 'dataService', '$scope', '$stateParams', 'Gravatar', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function (authService, dataService, $scope, $stateParams) {
+function (authService, dataService, $scope, $stateParams, Gravatar) {
     $scope.data = [];
     $scope.data = dataService.data[$stateParams.id];
     // console.log($stateParams.id);
     // console.log(dataService.data[$stateParams.id].id);
+    $scope.gravImg = Gravatar.get($scope.data.billing__email, 100);
     var d = $scope.data.line_items;
     d = "{" + d + "}";
     d = d.replace(/\n\n/g,"},{");
