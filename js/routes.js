@@ -9,28 +9,110 @@ angular.module('app.routes', [])
   $stateProvider
     
 
-      .state('ordersPage', {
-    url: '/orderspage',
-    templateUrl: 'templates/ordersPage.html',
-    controller: 'ordersPageCtrl'
+      .state('tabsController.homePage', {
+    url: '/home',
+    views: {
+      'tab1': {
+        templateUrl: 'templates/homePage.html',
+        controller: 'homePageCtrl'
+      }
+    }
   })
 
-  .state('orderPage', {
+  .state('tabsController.shop', {
+    url: '/shop',
+    views: {
+      'tab2': {
+        templateUrl: 'templates/shop.html',
+        controller: 'shopCtrl'
+      }
+    }
+  })
+
+  .state('tabsController.adminPage', {
+    url: '/admin',
+    views: {
+      'tab3': {
+        templateUrl: 'templates/adminPage.html',
+        controller: 'adminPageCtrl'
+      }
+    }
+  })
+
+  .state('tabsController', {
+    url: '/page1',
+    templateUrl: 'templates/tabsController.html',
+    abstract:true
+  })
+
+  .state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'loginCtrl'
+  })
+
+  .state('signup', {
+    url: '/signup',
+    templateUrl: 'templates/signup.html',
+    controller: 'signupCtrl'
+  })
+
+  .state('tabsController.ordersPage', {
+    url: '/orderspage',
+    views: {
+      'tab3': {
+        templateUrl: 'templates/ordersPage.html',
+        controller: 'ordersPageCtrl'
+      }
+    }
+  })
+
+  .state('tabsController.orderPage', {
     url: '/orderpage',
 	params: {
 		id: ""		
 },
-    templateUrl: 'templates/orderPage.html',
-    controller: 'orderPageCtrl'
+    views: {
+      'tab3': {
+        templateUrl: 'templates/orderPage.html',
+        controller: 'orderPageCtrl'
+      }
+    }
   })
 
-  .state('logIn', {
-    url: '/loginpage',
-    templateUrl: 'templates/logIn.html',
-    controller: 'logInCtrl'
+  .state('shop2', {
+    url: '/shop',
+    templateUrl: 'templates/shop2.html',
+    controller: 'shop2Ctrl'
   })
 
-$urlRouterProvider.otherwise('/loginpage')
+  .state('tabsController.productSections', {
+    url: '/sections',
+	params: {
+		category: ""		
+},
+    views: {
+      'tab2': {
+        templateUrl: 'templates/productSections.html',
+        controller: 'productSectionsCtrl'
+      }
+    }
+  })
+
+  .state('tabsController.products', {
+    url: '/products',
+	params: {
+		section: ""		
+},
+    views: {
+      'tab2': {
+        templateUrl: 'templates/products.html',
+        controller: 'productsCtrl'
+      }
+    }
+  })
+
+$urlRouterProvider.otherwise('/page1/home')
 
 
 });
