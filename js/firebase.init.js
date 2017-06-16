@@ -12,7 +12,8 @@ angular.module('firebaseConfig', ['firebase'])
   
   firebase.initializeApp(config);
     $rootScope.$on('$stateChangeSuccess', function(){
-        if($state.current.name !== 'login' || $state.current.name !== 'signup'){
+        console.log('State CHange to '+$state.current.name);
+        if(($state.current.name !== 'login' && $state.current.name !== 'signup') && $rootScope.user.name === ''){
             $state.go('login');    
         }
     });
