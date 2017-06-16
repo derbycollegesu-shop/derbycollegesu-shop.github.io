@@ -9847,3 +9847,8 @@ a.button {
     background: none; }
     .account-item .item-content.activated {
       background: rgba(255, 255, 255, 0.4); }
+
+.slide-heading {
+  position: absolute;
+  bottom: 0px;
+  width: 100%; }

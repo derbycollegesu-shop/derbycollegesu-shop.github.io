@@ -17,8 +17,34 @@ function ($scope, $stateParams, $timeout) {
         $scope.$parent.$parent.badges.notifications=4;
         $timeout(function() {$scope.$apply();});
     });
-     
-
+    
+    $scope.data = [];
+    
+    $scope.options = {
+        autoplay: 2000,
+        loop: false,
+        speed: 2000,
+        slidesPerView: 'auto',
+        pagination: 'none',
+        autoplayDisableOnInteraction: false,
+        centeredSlides: true,
+        effect: 'fade'
+      };
+    
+    $scope.$on("$ionicSlides.sliderInitialized", function(event, data){
+      // data.slider is the instance of Swiper
+      $scope.slider = data.slider;
+    });
+    
+    $scope.$on("$ionicSlides.slideChangeStart", function(event, data){
+      console.log('Slide change is beginning');
+    });
+    
+    $scope.$on("$ionicSlides.slideChangeEnd", function(event, data){
+      // note: the indexes are 0-based
+      $scope.activeIndex = data.slider.activeIndex;
+      $scope.previousIndex = data.slider.previousIndex;
+    });
 }])
    
 .controller('shopCtrl', ['$scope', '$stateParams', 'shopFactory', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
