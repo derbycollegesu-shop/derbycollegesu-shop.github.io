@@ -12,7 +12,7 @@ angular.module('firebaseConfig', ['firebase'])
   
   firebase.initializeApp(config);
     $rootScope.$on('$stateChangeSuccess', function(){
-        console.log('State CHange to '+$state.current.name);
+        //console.log('State CHange to '+$state.current.name);
         if(($state.current.name !== 'login' && $state.current.name !== 'signup') && $rootScope.user.name === ''){
             $state.go('login');    
         }
@@ -22,7 +22,7 @@ angular.module('firebaseConfig', ['firebase'])
         $rootScope.badges = [];
         
         if (user && $state.current.name !== 'signup') {
-            console.log('auth state changed triggered');
+            //console.log('auth state changed triggered');
             firebase.database().ref('users/'+user.uid).once('value', function(snapshot){
                 $rootScope.user = snapshot.val();
                 $rootScope.user.gravImg = Gravatar.get($rootScope.user.email, 200);
