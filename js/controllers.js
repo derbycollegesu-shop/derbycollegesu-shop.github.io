@@ -4,7 +4,7 @@ angular.module('app.controllers', [])
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $location, $state, $stateParams, Gravatar, $ionicHistory, $rootScope) {
-    if($state.current.name === 'login'){$rootScope.hideMenu = '.hideMenu'}else{$rootScope.hideMenu = ''}
+    
 }])
    
 .controller('homePageCtrl', ['$scope', '$stateParams', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
@@ -45,11 +45,15 @@ function ($scope, $stateParams) {
 
 }])
       
-.controller('loginCtrl', ['$scope', '$stateParams', '$ionicLoading', '$ionicSideMenuDelegate', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('loginCtrl', ['$scope', '$stateParams', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $ionicLoading, $ionicSideMenuDelegate) {
-   $ionicSideMenuDelegate.canDragContent(false);
+function ($scope, $stateParams, $ionicLoading) {
+   
+   $scope.$on('$ionicView.beforeEnter', function(){
+       angular.element(document.getElementsByTagName('ion-side-menu-content')).addClass('hiddenMenu');
+   });
+   
    //$rootScope.hideNav = true;
    
     // var myPopupScope = $rootScope.$new();
@@ -106,6 +110,9 @@ function ($scope, $stateParams, $ionicLoading, $ionicSideMenuDelegate) {
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams, $ionicLoading) {
     
+   $scope.$on('$ionicView.beforeEnter', function(){
+       angular.element(document.getElementsByTagName('ion-side-menu-content')).addClass('hiddenMenu');
+   });
 }])
    
 .controller('ordersPageCtrl', ['dataService', '$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller

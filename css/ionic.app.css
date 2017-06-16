@@ -9833,7 +9833,7 @@ a.button {
     border: 4px solid rgba(255, 255, 255, 0.4); }
 
 @media (min-width: 767px) {
-  .menu-content:not(.hideMenu) {
+  ion-side-menu-content:not(.hiddenMenu) {
     -webkit-transform: translate3d(270px, 0px, 0px) !important;
     width: calc(100% - 270px) !important; }
   .bar-header button.ion-navicon {

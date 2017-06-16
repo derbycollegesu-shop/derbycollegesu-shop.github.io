@@ -20,15 +20,11 @@ angular.module('firebaseConfig', ['firebase'])
                 $rootScope.user.gravImg = Gravatar.get($rootScope.user.email, 200);
                 $rootScope.badges.notifications = 3;
                  console.log($rootScope.user);
-                
-                // console.log($rootScope.user);
                 $ionicLoading.hide();
-                //if(myLoginPopup) myLoginPopup.close(); IONIC LOADING?
+                angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('hiddenMenu');
                 if (($state.current.name === 'login') || ($state.current.name === 'signup')) $state.go('tabsController.homePage');
             });
         } else {
-            
-            //console.log('should redirect!');
            if ($state.current.name !== 'login') $state.go('login');
         }
         
