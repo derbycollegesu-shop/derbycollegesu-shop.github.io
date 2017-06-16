@@ -9,8 +9,13 @@ angular.module('firebaseConfig', ['firebase'])
     databaseURL: "https://dcsu-shop-orders.firebaseio.com",
     storageBucket: "dcsu-shop-orders.appspot.com",
   };
+  
   firebase.initializeApp(config);
-    
+    $rootScope.$on('$stateChangeSuccess', function(){
+        if($state.current.name !== 'login' || $state.current.name !== 'signup'){
+            $state.go('login');    
+        }
+    });
     firebase.auth().onAuthStateChanged(function(user) {
         $rootScope.user = [];
         $rootScope.badges = [];
