@@ -1,10 +1,10 @@
 angular.module('app.controllers', [])
   
-.controller('menuCtrl', ['$scope', '$location', '$stateParams', 'Gravatar', '$ionicHistory', '$rootScope', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('menuCtrl', ['$scope', '$location', '$state', '$stateParams', 'Gravatar', '$ionicHistory', '$rootScope', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $location, $stateParams, Gravatar, $ionicHistory, $rootScope) {
-
+function ($scope, $location, $state, $stateParams, Gravatar, $ionicHistory, $rootScope) {
+    if($state.current.name === 'login'){$rootScope.hideMenu = '.hideMenu'}else{$rootScope.hideMenu = ''}
 }])
    
 .controller('homePageCtrl', ['$scope', '$stateParams', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
@@ -45,11 +45,12 @@ function ($scope, $stateParams) {
 
 }])
       
-.controller('loginCtrl', ['$scope', '$stateParams', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('loginCtrl', ['$scope', '$stateParams', '$ionicLoading', '$ionicSideMenuDelegate', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $ionicLoading) {
-   
+function ($scope, $stateParams, $ionicLoading, $ionicSideMenuDelegate) {
+   $ionicSideMenuDelegate.canDragContent(false);
+   //$rootScope.hideNav = true;
    
     // var myPopupScope = $rootScope.$new();
     // myPopupScope.userDetails = [];

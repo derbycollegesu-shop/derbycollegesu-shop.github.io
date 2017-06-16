@@ -55,7 +55,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // FOR SIDE MENU
 @media (min-width: 767px) {
-	.menu-content {
+	.menu-content: not(.hideMenu) {
 		-webkit-transform: translate3d(270px, 0px, 0px) !important;
 		width: calc(100% - 270px) !important;
 	}
