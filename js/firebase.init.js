@@ -23,13 +23,14 @@ angular.module('firebaseConfig', ['firebase'])
                 $rootScope.badges.notifications = 3;
                  console.log($rootScope.user);
                 $ionicLoading.hide();
-                
+                g
                 if (($state.current.name === 'login') || ($state.current.name === 'signup')) {
                     angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('hiddenMenu');
                     $state.go('tabsController.homePage');
                 }
             });
         } else {
+            
            if ($state.current.name !== 'login' && ($state.current.name !== 'signup')) $state.go('login');
         }
         
