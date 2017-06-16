@@ -3,7 +3,7 @@
     <ion-list id="products-list4">
       <ion-item id="products-list-item23" ng-repeat="product in shop.products">{{product.name}}
         <span class="item-note">£{{product.price}}</span>
-        <ion-option-button class="button-positive" ng-click="addToCart(slidingItem,product.name)">Add to Cart</ion-option-button>
+        <ion-option-button class="button-positive" ng-click="addToCart(product.name)">Add to Cart</ion-option-button>
       </ion-item>
     </ion-list>
   </ion-content>

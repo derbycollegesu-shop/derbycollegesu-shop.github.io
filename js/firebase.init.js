@@ -1,6 +1,6 @@
 angular.module('firebaseConfig', ['firebase'])
 
-.run(function($state, $rootScope, $ionicLoading){
+.run(function($state, $rootScope, Gravatar, $ionicLoading){
     
   // Initialize Firebase
   var config = {
@@ -12,12 +12,24 @@ angular.module('firebaseConfig', ['firebase'])
   firebase.initializeApp(config);
     
     firebase.auth().onAuthStateChanged(function(user) {
+        $rootScope.user = [];
+        $rootScope.badges = [];
         if (user) {
-            //if(myLoginPopup) myLoginPopup.close(); IONIC LOADING?
-            if (($state.current.name === 'login') || ($state.current.name === 'signup')) $state.go('tabsController.homePage');
-            if(!$ionicLoading) $ionicLoading.hide();
+            firebase.database().ref('users/'+user.uid).once('value', function(snapshot){
+                $rootScope.user = snapshot.val();
+                $rootScope.user.gravImg = Gravatar.get($rootScope.user.email, 200);
+                $rootScope.badges.notifications = 3;
+                 console.log($rootScope.user);
+                
+                // console.log($rootScope.user);
+                $ionicLoading.hide();
+                //if(myLoginPopup) myLoginPopup.close(); IONIC LOADING?
+                if (($state.current.name === 'login') || ($state.current.name === 'signup')) $state.go('tabsController.homePage');
+            });
         } else {
-            if ($state.current.name !== 'login') $state.go('login');
+            
+            //console.log('should redirect!');
+           if ($state.current.name !== 'login') $state.go('login');
         }
         
     });

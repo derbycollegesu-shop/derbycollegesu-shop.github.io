@@ -1,18 +1,23 @@
 angular.module('app.controllers', [])
   
-.controller('menuCtrl', ['$scope', '$stateParams', 'Gravatar', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('menuCtrl', ['$scope', '$location', '$stateParams', 'Gravatar', '$ionicHistory', '$rootScope', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, Gravatar) {
-    $scope.gravImg = Gravatar.get('mark@marksveryown.com', 100);
+function ($scope, $location, $stateParams, Gravatar, $ionicHistory, $rootScope) {
 
 }])
    
-.controller('homePageCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('homePageCtrl', ['$scope', '$stateParams', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
+function ($scope, $stateParams, $timeout) {
+     
+    $scope.$on('$ionicView.beforeEnter',function(){
+        $scope.$parent.$parent.badges = {};
+        $scope.$parent.$parent.badges.notifications=4;
+        $timeout(function() {$scope.$apply();});
+    });
+     
 
 }])
    
@@ -44,6 +49,8 @@ function ($scope, $stateParams) {
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams, $ionicLoading) {
+   
+   
     // var myPopupScope = $rootScope.$new();
     // myPopupScope.userDetails = [];
     // myPopupScope.login2 = function() {
@@ -145,14 +152,6 @@ function (dataService, $scope, $stateParams, Gravatar) {
 
 }])
    
-.controller('shop2Ctrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}])
-   
 .controller('productSectionsCtrl', ['$scope', '$stateParams', 'shopFactory', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
@@ -193,10 +192,27 @@ function ($scope, $stateParams, shopFactory,$ionicListDelegate) {
         $scope.$apply();
     });
     
-    $scope.addToCart = function(slidingItem,d){
+    $scope.addToCart = function(d){
         $ionicListDelegate.closeOptionButtons();
         alert(d);
     };
+
+}])
+   
+.controller('myAccountCtrl', ['$scope', '$stateParams', 'Gravatar', '$rootScope', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams, Gravatar, $rootScope) {
+    $scope.logout = function(){
+        firebase.auth().signOut();
+    };
+}])
+   
+.controller('notificationsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
 
 }])
  

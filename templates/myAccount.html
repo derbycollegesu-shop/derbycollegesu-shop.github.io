@@ -1,0 +1,24 @@
+<ion-view title="My Account" id="page12">
+  <ion-nav-buttons side="left" class="has-header">
+    <button class="button icon No Icon" ui-sref="tabsController.homePage"> Home</button>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+    <div class="list card" id="myAccount-card22">
+      <ion-item class="item-avatar item-borderless" id="myAccount-list-item18">
+        <img src="{{user.gravImg}}">
+        <h2>{{user.name}}</h2>
+        <p>
+          <small>{{user.email}}</small>
+        </p>
+      </ion-item>
+      <div class="item item-body item-borderless" id="myAccount-list-item-container5">
+        <div id="myAccount-markdown8" class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#000000;">Some friendly
+            <strong>markdown</strong>
+          </p>
+        </div>
+      </div>
+      <button id="myAccount-button6" ng-click="logout()" style="font-size:10px;" class="button button-assertive button-block button-clear">Signout</button>
+    </div>
+  </ion-content>
+</ion-view>

@@ -40,7 +40,7 @@ angular.module('app.routes', [])
   })
 
   .state('tabsController', {
-    url: '/page1',
+    url: '/tabs',
     templateUrl: 'templates/tabsController.html',
     abstract:true
   })
@@ -80,12 +80,6 @@ angular.module('app.routes', [])
     }
   })
 
-  .state('shop2', {
-    url: '/shop',
-    templateUrl: 'templates/shop2.html',
-    controller: 'shop2Ctrl'
-  })
-
   .state('tabsController.productSections', {
     url: '/sections',
 	params: {
@@ -112,7 +106,23 @@ angular.module('app.routes', [])
     }
   })
 
-$urlRouterProvider.otherwise('/page1/home')
+  .state('myAccount', {
+    url: '/myaccount',
+    templateUrl: 'templates/myAccount.html',
+    controller: 'myAccountCtrl'
+  })
+
+  .state('tabsController.notifications', {
+    url: '/notifications',
+    views: {
+      'tab4': {
+        templateUrl: 'templates/notifications.html',
+        controller: 'notificationsCtrl'
+      }
+    }
+  })
+
+$urlRouterProvider.otherwise('/tabs/home')
 
 
 });
