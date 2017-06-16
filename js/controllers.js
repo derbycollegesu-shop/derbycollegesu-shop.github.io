@@ -86,11 +86,14 @@ function ($scope, $stateParams, $ionicLoading) {
     $scope.loginError = '';
     
     $scope.login = function(){
+        if(!$scope.userdetails || !$scope.userdetails.collegeid || !$scope.userdetails.password){
+            $scope.loginError = "Enter all details!";
+            return;
+        }
         $ionicLoading.show({
             template: '<p>Loading...</p><ion-spinner></ion-spinner>'
         });
         var useremail = $scope.userdetails.collegeid+'@';
-        console.log($scope.userdetails.staffLogon);
         if (!$scope.userdetails.staffLogon) useremail += 'student.';
         useremail += 'derby-college.ac.uk';
         firebase.auth().signInWithEmailAndPassword(useremail, $scope.userdetails.password).catch(function(error) {
@@ -105,14 +108,57 @@ function ($scope, $stateParams, $ionicLoading) {
     };
 }])
    
-.controller('signupCtrl', ['$scope', '$stateParams', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('signupCtrl', ['$scope', '$stateParams', '$ionicLoading', '$rootScope', '$state', 'Gravatar', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $ionicLoading) {
+function ($scope, $stateParams, $ionicLoading, $rootScope, $state, Gravatar) {
+    $scope.userdetails = [];
+    $scope.userdetails.staffLogon = false; //Make default student signup
+    $scope.loginError = '';
     
-   $scope.$on('$ionicView.beforeEnter', function(){
-       angular.element(document.getElementsByTagName('ion-side-menu-content')).addClass('hiddenMenu');
-   });
+    $scope.$on('$ionicView.beforeEnter', function(){
+        angular.element(document.getElementsByTagName('ion-side-menu-content')).addClass('hiddenMenu');
+    });
+   
+    $scope.signup = function(){
+        if(!$scope.userdetails || !$scope.userdetails.collegeid || !$scope.userdetails.password || !$scope.userdetails.name){
+            $scope.loginError = "Enter all details!";
+            return;
+        }
+        $ionicLoading.show({
+            template: '<p>Loading...</p><ion-spinner></ion-spinner>'
+        });
+        var useremail = $scope.userdetails.collegeid+'@';
+        if (!$scope.userdetails.staffLogon) useremail += 'student.';
+        useremail += 'derby-college.ac.uk';
+        firebase.auth().createUserWithEmailAndPassword(useremail, $scope.userdetails.password)
+            .then(function(user){
+                $rootScope.user = [];
+                user.updateProfile({
+                    displayName: $scope.userdetails.name
+                }).then (function(){
+                    firebase.database().ref('users/'+user.uid).set({
+                        key: user.uid,
+                        email: user.email,
+                        name: user.displayName,
+                        displayName: user.displayName
+                    }).then(function(){
+                        $rootScope.user = user;
+                        $rootScope.user.name = user.displayName;
+                        $rootScope.user.gravImg = Gravatar.get(user.email, 200);
+                        angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('hiddenMenu');
+                        $ionicLoading.hide();
+                        $state.go('tabsController.homePage');
+                    });
+                });
+                $ionicLoading.hide();
+                console.log(user);
+            })
+            .catch(function(err){
+                $ionicLoading.hide();
+                console.log(err);
+            });
+   };
 }])
    
 .controller('ordersPageCtrl', ['dataService', '$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
