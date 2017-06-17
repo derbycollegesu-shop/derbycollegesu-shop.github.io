@@ -199,7 +199,7 @@ function ($scope, $stateParams, $ionicLoading, $rootScope, $state, Gravatar) {
 function (dataService, $scope, $stateParams) {
     $scope.data = [];
     var newArr;
-    firebase.database().ref('orders').on('value', function(snapshot){
+    firebase.database().ref('newOrders').on('value', function(snapshot){
         dataService.data = snapshot.val();
         var data = snapshot.val();
         newArr = Object.keys(data).map(function (key) { return data[key]; });
@@ -220,20 +220,29 @@ function (dataService, $scope, $stateParams, Gravatar) {
     $scope.data = dataService.data[$stateParams.id];
     // console.log($stateParams.id);
     // console.log(dataService.data[$stateParams.id].id);
-    $scope.gravImg = Gravatar.get($scope.data.billing__email, 100);
-    var d = $scope.data.line_items;
-    d = "{" + d + "}";
-    d = d.replace(/\n\n/g,"},{");
-    d = d.replace(/\n/g,"\",\"");
-    d = d.replace(/NU:/g,"NU");
-    d = d.replace(/: /g,"\":\"");
-    d = d.replace(/{/g,"{\"");
-    d = d.replace(/}/g,"\"}");
+    $scope.gravImg = Gravatar.get(dataService.data[$stateParams.id].billing.email, 100);
+//     var d = $scope.data.line_items;
     
-   // console.log(d);
-    d = JSON.parse("["+d+"]");
-    $scope.items = [];
-    $scope.items = d;
+//     console.log(JSON.parse($scope.data.line_items));
+//     d = "{" + d + "}";
+//     d = d.replace(/{u'/g,"{");
+//     d = d.replace(/': u'/g,": ");
+//     d = d.replace(/': u/g,": ");
+//     d = d.replace(/': /g,/\": /);
+//     d = d.replace(/', u'/g,"\", \"");
+//     d = d.replace(/, u'/g,", \"");
+//     d = d.replace(/\n\n/g,"},{");
+//     d = d.replace(/\n/g,"\",\"");
+//     d = d.replace(/NU:/g,"NU");
+//     d = d.replace(/: /g,"\":\"");
+//     d = d.replace(/{/g,"{\"");
+//     d = d.replace(/}/g,"\"}");
+    
+//   // console.log(d);
+//     console.log(d);
+//     d = JSON.parse("["+d+"]");
+     $scope.items = [];
+    $scope.items = dataService.data[$stateParams.id].line_items;
     //console.log(d);
 
 }])
