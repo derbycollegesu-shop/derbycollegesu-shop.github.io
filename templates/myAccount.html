@@ -11,6 +11,15 @@
           <small>{{user.email}}</small>
         </p>
       </ion-item>
+      <ion-item class="item-divider item-borderless" id="myAccount-list-item-divider3"> Account Actions</ion-item>
+      <ion-item id="myAccount-list-item13" ng-if="user.email_verified" class="item-borderless">Account Verified
+        <span class="item-note">
+          <img src="https://gdzone-geekdashboardco.netdna-ssl.com/wp-content/uploads/tick.png" style="height:25px;margin-bottom:-9px;">
+        </span>
+      </ion-item>
+      <ion-item class="item-icon-right item-borderless" id="myAccount-list-item12" ng-if="!user.email_verified">Send Verification Email
+        <i class="icon ion-ios-email-outline"></i>
+      </ion-item>
       <div class="item item-body item-borderless" id="myAccount-list-item-container5">
         <div id="myAccount-markdown8" class="show-list-numbers-and-dots">
           <p style="margin-top:0px;color:#000000;">Some friendly

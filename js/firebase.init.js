@@ -1,6 +1,6 @@
 angular.module('firebaseConfig', ['firebase'])
 
-.run(function($state, $rootScope, Gravatar, $ionicLoading){
+.run(function($state, $rootScope, Gravatar, $ionicLoading, $stateParams){
     
   // Initialize Firebase
   var config = {
@@ -14,7 +14,7 @@ angular.module('firebaseConfig', ['firebase'])
     $rootScope.$on('$stateChangeSuccess', function(){
         //console.log('State CHange to '+$state.current.name);
         if(($state.current.name !== 'login' && $state.current.name !== 'signup') && $rootScope.user.name === ''){
-            $state.go('login');    
+            $state.go('login', {'prevState':$state.current.name});    
         }
     });
     firebase.auth().onAuthStateChanged(function(user) {
@@ -27,15 +27,21 @@ angular.module('firebaseConfig', ['firebase'])
                 $rootScope.user = snapshot.val();
                 $rootScope.user.gravImg = Gravatar.get($rootScope.user.email, 200);
                 $rootScope.badges.notifications = 3;
+                $rootScope.user.email_verified = user.emailVerified;
+                console.log(user);
                  console.log($rootScope.user);
                 $ionicLoading.hide();
                 if (($state.current.name === 'login') || ($state.current.name === 'signup')) {
                     angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('hiddenMenu');
-                    $state.go('tabsController.homePage');
+                    if($stateParams.prevState !== ''){
+                        $state.go($stateParams.prevState, $stateParams.prevParams);
+                    }else{
+                        $state.go('tabsController.homePage');
+                    }
                 }
             });
         } else {
-           if ($state.current.name !== 'login' && ($state.current.name !== 'signup')) $state.go('login');
+           if ($state.current.name !== 'login' && ($state.current.name !== 'signup')) $state.go('login', {'prevState':$state.current.name});
         }
         
     });

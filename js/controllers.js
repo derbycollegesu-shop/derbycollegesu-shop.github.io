@@ -86,6 +86,8 @@ function ($scope, $stateParams, $ionicLoading, $ionicHistory, $timeout) {
        angular.element(document.getElementsByTagName('ion-side-menu-content')).addClass('hiddenMenu');
    });
    
+   console.log($stateParams);
+   
    //$rootScope.hideNav = true;
    
     // var myPopupScope = $rootScope.$new();

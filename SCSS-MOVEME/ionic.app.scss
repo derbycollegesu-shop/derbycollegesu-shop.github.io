@@ -87,4 +87,51 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	width: 100%;
 }
 
-;
+//VERIFIED TICK
+.verified-tick {
+	position: relative;
+	//top: -30px;
+	//left: 20px;
+	transform: translate(20px, -30px);
+	margin-bottom: -30px;
+}
+
+//LIST AND GRID CSS
+.remove-all {
+	padding: 0px !important;
+	margin: 0px !important;
+}
+
+.home-tile {
+	height: 50vw !important;
+	max-height: 100px !important;
+}
+
+@media (min-width: 767px) {
+	.col-33 {
+		ion-list .home-tile-item {
+			height: calc(((100vw - 270px) / 3 ) - 10px) !important;
+		}
+		
+	}
+	.col-66 {
+		ion-list .home-tile-item {
+			height: calc(((100vw - 270px) / 3 ) - 10px) !important;
+		}
+		
+	}
+}
+@media (max-width: 766px) {
+	.col-33 {
+		ion-list .home-tile-item {
+			height: calc( 33vw - 10px ) !important;
+		}
+		
+	}
+	.col-66 {
+		ion-list .home-tile-item {
+			height: calc( 33vw - 10px ) !important;
+		}
+		
+	}
+}

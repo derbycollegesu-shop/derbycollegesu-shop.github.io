@@ -47,6 +47,10 @@ angular.module('app.routes', [])
 
   .state('login', {
     url: '/login',
+	params: {
+		prevState: "",
+		prevParams: ""		
+},
     templateUrl: 'templates/login.html',
     controller: 'loginCtrl'
   })
