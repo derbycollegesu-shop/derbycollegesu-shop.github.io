@@ -166,7 +166,8 @@ function ($scope, $stateParams, $ionicLoading, $ionicHistory, $timeout) {
 }
 
 function param() {
-    return ptq(location.search.substring(1).replace(/\+/g, ' '));
+    console.log(window.location.search.substring(1).replace(/\+/g, ' '));
+    return ptq(window.location.search.substring(1).replace(/\+/g, ' '));
 }
 
 function entify(s)
