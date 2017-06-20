@@ -6,11 +6,19 @@ angular.module('authModule', [])
     
    
     $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
-        console.log("$stateChangeStart " + fromState.name + JSON.stringify(fromParams) + " -> " + toState.name + JSON.stringify(toParams));
+        // console.log("$stateChangeStart " + fromState.name + JSON.stringify(fromParams) + " -> " + toState.name + JSON.stringify(toParams));
         if(fromState.name === '') console.log('No Prev State: ' + $location.search());
         if((toState.name !== 'login' && toState.name !== 'signup') && $rootScope.user.name === 'User Name'){
             evt.preventDefault();
-            $state.go('login',{'prevState': toState.name, 'prevParams': JSON.stringify($location.search())});
+            if($stateParams.prevState !== ''){
+                to = $stateParams.prevState; 
+                toP = $stateParams.toParams;
+            } else {
+                to = toState.name;
+                toP = JSON.stringify($location.search());
+            }
+            console.log(to, toP);
+            $state.go('login',{'prevState': to, 'prevParams': toP});
             //console.log('moved');
         }
     });
