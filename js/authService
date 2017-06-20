@@ -40,7 +40,7 @@ angular.module('authModule', [])
                         angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('hiddenMenu');
                         $ionicHistory.nextViewOptions({disableBack: true});
                         if($stateParams.prevState !== ''){
-                            //console.log('moving to '+$stateParams.prevState);
+                            console.log('moving to '+$stateParams.prevState + ' ' + $stateParams.prevParams);
                             $state.go($stateParams.prevState, JSON.parse($stateParams.prevParams));
                         }else{
                             //console.log('moving to home');
