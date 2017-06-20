@@ -144,43 +144,52 @@ function ($scope, $stateParams, $ionicLoading, $ionicHistory, $timeout) {
     
     function ptq(q)
 {
-/* parse the query */
-/* semicolons are nonstandard but we accept them */
-var x = q.replace(/;/g, '&').split('&'), i, name, t;
-/* q changes from string version of query to object */
-for (q={}, i=0; i<x.length; i++)
-{
-t = x[i].split('=', 2);
-name = unescape(t[0]);
-if (!q[name])
-q[name] = [];
-if (t.length > 1)
-{
-q[name][q[name].length] = unescape(t[1]);
-}
-/* next two lines are nonstandard */
-else
-q[name][q[name].length] = true;
-}
-return q;
+    /* parse the query */
+    /* semicolons are nonstandard but we accept them */
+    var x = q.replace(/;/g, '&').split('&'), i, name, t;
+    /* q changes from string version of query to object */
+    for (q={}, i=0; i<x.length; i++)
+    {
+    t = x[i].split('=', 2);
+    name = unescape(t[0]);
+    if (!q[name])
+    q[name] = [];
+    if (t.length > 1)
+    {
+    q[name][q[name].length] = unescape(t[1]);
+    }
+    /* next two lines are nonstandard */
+    else
+    q[name][q[name].length] = true;
+    }
+    return q;
 }
 
 function param() {
-return ptq(location.search.substring(1).replace(/\+/g, ' '));
+    return ptq(location.search.substring(1).replace(/\+/g, ' '));
+}
+
+function entify(s)
+/* convert unsafe characters to HTML entities */
+{
+return (''+s).
+replace(/&/g, '&amp;').
+replace(/</g, '&lt;').
+replace(/"/g, '&quot;').
+replace(/>/g, '&gt;');
 }
 
 q = param();
 
 for (var k in q)
 {
-  
-{
-
-for (i=0; i<q[k].length; i++)
-alert(k + ' ' + q[k][i]);
+    for (i=0; i<q[k].length; i++) {
+        alert(k + ' ' + entify(q[k][i]));
+        console.log(k,entify(q[k][i]));
+    }
 }
 
-}
+
 }])
    
 .controller('signupCtrl', ['$scope', '$stateParams', '$ionicLoading', '$rootScope', '$state', 'Gravatar', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
