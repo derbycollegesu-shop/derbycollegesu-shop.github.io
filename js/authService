@@ -7,7 +7,7 @@ angular.module('authModule', [])
    
     $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
         //console.log("$stateChangeStart " + fromState.name + JSON.stringify(fromParams) + " -> " + toState.name + JSON.stringify(toParams));
-        console.log(window.location.search.substring(1));
+        console.log('search :'+window.location.search.substring(1));
         if((toState.name !== 'login' && toState.name !== 'signup') && $rootScope.user.name === 'User Name'){
             evt.preventDefault();
             $state.go('login',{'prevState': toState.name, 'prevParams': JSON.stringify(toParams)});
@@ -23,7 +23,7 @@ angular.module('authModule', [])
     firebase.auth().onAuthStateChanged(function(user) {
         //console.log('authed');
         $ionicLoading.show({
-            template: '<p>Loading...</p><ion-spinner></ion-spinner>'
+            template: '<p>Loading it...</p><ion-spinner></ion-spinner>'
         });
         $rootScope.user = [];
         //$rootScope.badges = [];
@@ -35,7 +35,7 @@ angular.module('authModule', [])
                 $rootScope.user.email_verified = user.emailVerified;
                 $ionicLoading.hide();
             }).then(function(){
-                $timeout(function(){
+                
                     if (($state.current.name === 'login') || ($state.current.name === 'signup')) {
                         angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('hiddenMenu');
                         $ionicHistory.nextViewOptions({disableBack: true});
@@ -47,12 +47,13 @@ angular.module('authModule', [])
                             $state.go('tabsController.homePage');
                         }
                     }
-                });
+
             });
         } else {
           if ($state.current.name !== 'login' && ($state.current.name !== 'signup')) {
             $state.go('login', {'prevState':$state.current.name});
           }
+          $ionicLoading.hide();
         }
         
     });
