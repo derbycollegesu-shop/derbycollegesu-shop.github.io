@@ -71,10 +71,10 @@ function ($scope, $stateParams) {
 
 }])
       
-.controller('loginCtrl', ['$scope', '$stateParams', '$ionicLoading', '$ionicHistory', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('loginCtrl', ['$scope', '$stateParams', '$ionicLoading', '$ionicHistory', '$timeout', '$window', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $ionicLoading, $ionicHistory, $timeout) {
+function ($scope, $stateParams, $ionicLoading, $ionicHistory, $timeout, $window) {
    
    $scope.$on('$ionicView.beforeEnter', function(){
         $timeout(function(){
@@ -166,8 +166,8 @@ function ($scope, $stateParams, $ionicLoading, $ionicHistory, $timeout) {
 }
 
 function param() {
-    console.log(window.location.search.substring(1).replace(/\+/g, ' '));
-    return ptq(window.location.search.substring(1).replace(/\+/g, ' '));
+    console.log($window.location.search.substring(1).replace(/\+/g, ' '));
+    return ptq($window.location.search.substring(1).replace(/\+/g, ' '));
 }
 
 function entify(s)
