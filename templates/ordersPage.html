@@ -1,8 +1,8 @@
-<ion-view title="Orders Page" id="page7">
+<ion-view title="Orders Page" cache-view="false" id="page7">
   <ion-content padding="true" class="has-header">
     <ion-list id="ordersPage-list1">
-      <ion-item id="ordersPage-list-item4" ui-sref="tabsController.orderPage({&quot;id&quot;:&quot;&quot;+item.id+&quot;&quot;})" ng-repeat="item in data | orderBy:number:true">{{item.number}}
-        <span class="item-note">{{item.status}}</span>
+      <ion-item id="ordersPage-list-item4" ui-sref="tabsController.orderPage({&quot;id&quot;:&quot;&quot;+order.id+&quot;&quot;})" ng-repeat="order in orders | orderBy:id:true">{{order.number}} ({{order.customer}})
+        <span class="item-note">{{order.site}} - {{order.status}}</span>
       </ion-item>
     </ion-list>
   </ion-content>

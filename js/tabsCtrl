@@ -1,0 +1,18 @@
+/* !!! IMPORTANT: Rename "mymodule" below and add your module to Angular Modules above. */
+
+angular.module('app.tabs', [])
+
+.controller('tabsCtrl', function($scope, $state, $ionicTabsDelegate, $ionicHistory){ 
+    var prevTab = '';
+    
+    $scope.tabIt = function(tabIndex,tabStateName){   
+        if(prevTab === tabIndex) {
+            $ionicHistory.nextViewOptions({disableBack: true});
+            prevTab = tabIndex;
+            $state.go(tabStateName);
+        } else {
+            $ionicTabsDelegate.select(tabIndex);
+            prevTab = tabIndex;
+        }
+    };
+});

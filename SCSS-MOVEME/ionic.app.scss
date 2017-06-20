@@ -97,41 +97,96 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 //LIST AND GRID CSS
-.remove-all {
-	padding: 0px !important;
-	margin: 0px !important;
+.grid-container {
+	width: calc(100% + 12px);
+	max-width: 1200px;
+	margin: auto -6px auto -6px;
 }
 
-.home-tile {
-	height: 50vw !important;
-	max-height: 100px !important;
+.grid-container * {
+	box-sizing: border-box;
 }
 
-@media (min-width: 767px) {
-	.col-33 {
-		ion-list .home-tile-item {
-			height: calc(((100vw - 270px) / 3 ) - 10px) !important;
-		}
-		
-	}
-	.col-66 {
-		ion-list .home-tile-item {
-			height: calc(((100vw - 270px) / 3 ) - 10px) !important;
-		}
-		
-	}
+.grid-row: before, 
+.grid-row: after {
+	content: "";
+	display: table;
+	clear: both;
+	margin: auto 3px auto 3px;
 }
-@media (max-width: 766px) {
-	.col-33 {
-		ion-list .home-tile-item {
-			height: calc( 33vw - 10px ) !important;
-		}
-		
+
+[class*='grid-col-'] {
+	float: left;
+	min-height: 1px;
+	width: calc(16.66% - 12px);
+	/*-- our gutter --*/
+	        margin: 6px;
+	margin-top: 12px;
+}
+
+.outline, .outline * {
+	//outline: 1px solid #F6A1A1;
+}
+
+[class*='grid-col-'] > p {
+	background-color: #FFC2C2;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	color: white;
+}
+
+@media all and (min-width: 801px) {
+	.grid-col-1 {
+		width: calc(16.66% - 12px);
 	}
-	.col-66 {
-		ion-list .home-tile-item {
-			height: calc( 33vw - 10px ) !important;
-		}
-		
+	
+	.grid-col-2 {
+		width: calc(33.33% - 12px);
 	}
+	
+	.grid-col-3 {
+		width: calc(50% - 12px);
+	}
+	
+	.grid-col-4 {
+		width: calc(66.664% - 12px);
+	}
+	
+	.grid-col-5 {
+		width: calc(83.33% - 12px);
+	}
+	
+	.grid-col-6 {
+		width: calc(100% - 12px);
+	}
+	
+}
+@media all and (max-width: 800px) {
+	.grid-col-1-md {
+		width: calc(33.33% - 12px);
+	}
+	
+	.grid-col-2-md {
+		width: calc(50% - 12px);
+	}
+	
+	.grid-col-3-md {
+		width: calc(66.66% - 12px);
+	}
+	
+	.grid-col-4-md {
+		width: calc(100% - 12px);
+	}
+	
+}
+@media all and (max-width: 600px) {
+	.grid-col-1-sm {
+		width: calc(50% - 12px);
+	}
+	
+	.grid-col-2-sm {
+		width: calc(100% - 12px);
+	}
+	
 }

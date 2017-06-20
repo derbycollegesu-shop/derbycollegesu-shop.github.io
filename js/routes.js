@@ -74,7 +74,7 @@ angular.module('app.routes', [])
   .state('tabsController.orderPage', {
     url: '/orderpage',
 	params: {
-		id: ""		
+		id: "4058"		
 },
     views: {
       'tab3': {
@@ -126,7 +126,7 @@ angular.module('app.routes', [])
     }
   })
 
-$urlRouterProvider.otherwise('/tabs/home')
+$urlRouterProvider.otherwise('/login')
 
 
 });

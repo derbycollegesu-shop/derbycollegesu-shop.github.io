@@ -24,5 +24,5 @@ angular.module('app.services', [])
     var data = [];
     
     
-    return {data: data};
+    return {data: data, doit: function(x){console.log(x);}};
 }]);

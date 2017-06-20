@@ -13,8 +13,8 @@ function ($scope, $location, $state, $stateParams, Gravatar, $ionicHistory, $roo
 function ($scope, $stateParams, $timeout) {
      
     $scope.$on('$ionicView.beforeEnter',function(){
-        $scope.$parent.$parent.badges = {};
-        $scope.$parent.$parent.badges.notifications=4;
+        //$scope.$parent.$parent.badges = {};
+        //$scope.$parent.$parent.badges.notifications=4;
         $timeout(function() {$scope.$apply();});
     });
     
@@ -51,8 +51,6 @@ function ($scope, $stateParams, $timeout) {
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams, shopFactory) {
-    // newKey = firebase.database().ref('shop/categories').push().key;
-    // firebase.database().ref('shop/categories/'+newKey).set({'name':'Books','order':0});
     
     $scope.shop = [];
     $scope.shop = shopFactory;
@@ -67,6 +65,7 @@ function ($scope, $stateParams, shopFactory) {
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
+    alert(location.search);
 
 
 }])
@@ -86,7 +85,7 @@ function ($scope, $stateParams, $ionicLoading, $ionicHistory, $timeout) {
        angular.element(document.getElementsByTagName('ion-side-menu-content')).addClass('hiddenMenu');
    });
    
-   console.log($stateParams);
+   //console.log($stateParams);
    
    //$rootScope.hideNav = true;
    
@@ -169,7 +168,8 @@ function ($scope, $stateParams, $ionicLoading, $rootScope, $state, Gravatar) {
             .then(function(user){
                 $rootScope.user = [];
                 user.updateProfile({
-                    displayName: $scope.userdetails.name
+                    displayName: $scope.userdetails.name,
+                    photoURL: Gravatar.get(user.email, 200)
                 }).then (function(){
                     firebase.database().ref('users/'+user.uid).set({
                         key: user.uid,
@@ -179,7 +179,7 @@ function ($scope, $stateParams, $ionicLoading, $rootScope, $state, Gravatar) {
                     }).then(function(){
                         $rootScope.user = user;
                         $rootScope.user.name = user.displayName;
-                        $rootScope.user.gravImg = Gravatar.get(user.email, 200);
+                        $rootScope.user.gravImg = user.photoURL
                         angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('hiddenMenu');
                         $ionicLoading.hide();
                         $state.go('tabsController.homePage');
@@ -195,78 +195,46 @@ function ($scope, $stateParams, $ionicLoading, $rootScope, $state, Gravatar) {
    };
 }])
    
-.controller('ordersPageCtrl', ['dataService', '$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('ordersPageCtrl', ['$scope', '$stateParams', 'dataService', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function (dataService, $scope, $stateParams) {
-    $scope.data = [];
-    var newArr;
-    firebase.database().ref('newOrders').on('value', function(snapshot){
-        dataService.data = snapshot.val();
-        var data = snapshot.val();
-        newArr = Object.keys(data).map(function (key) { return data[key]; });
-        $scope.data = newArr;
-        $scope.$apply();
+function ($scope, $stateParams, dataService) {
+    $scope.orders = [];
+    $scope.orders = dataService.data;
+    
+
+    firebase.database().ref('orderList').on('value', function(snapshot){
+         $scope.orders = Object.keys(snapshot.val()).map(function (key) { return snapshot.val()[key]; });
     });
+    
     $scope.logout = function(){
         firebase.auth().signOut();
-    }
+    };
     
 }])
    
-.controller('orderPageCtrl', ['dataService', '$scope', '$stateParams', 'Gravatar', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('orderPageCtrl', ['$state', '$scope', '$stateParams', 'Gravatar', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function (dataService, $scope, $stateParams, Gravatar) {
-    $scope.data = [];
-    $scope.data = dataService.data[$stateParams.id];
-    // console.log($stateParams.id);
-    // console.log(dataService.data[$stateParams.id].id);
-    $scope.gravImg = Gravatar.get(dataService.data[$stateParams.id].billing.email, 100);
-//     var d = $scope.data.line_items;
+function ($state, $scope, $stateParams, Gravatar) {
+    if($stateParams.id === ''){
+        $state.go('tabsController.ordersPage');
+        return;
+    }
     
-//     console.log(JSON.parse($scope.data.line_items));
-//     d = "{" + d + "}";
-//     d = d.replace(/{u'/g,"{");
-//     d = d.replace(/': u'/g,": ");
-//     d = d.replace(/': u/g,": ");
-//     d = d.replace(/': /g,/\": /);
-//     d = d.replace(/', u'/g,"\", \"");
-//     d = d.replace(/, u'/g,", \"");
-//     d = d.replace(/\n\n/g,"},{");
-//     d = d.replace(/\n/g,"\",\"");
-//     d = d.replace(/NU:/g,"NU");
-//     d = d.replace(/: /g,"\":\"");
-//     d = d.replace(/{/g,"{\"");
-//     d = d.replace(/}/g,"\"}");
+    $scope.order = [];
     
-//   // console.log(d);
-//     console.log(d);
-//     d = JSON.parse("["+d+"]");
-     $scope.items = [];
-    $scope.items = dataService.data[$stateParams.id].line_items;
-    //console.log(d);
-
+    firebase.database().ref('newOrders/' + $stateParams.id).once('value', function(snapshot){
+        $scope.order = snapshot.val();
+        $scope.gravImg = Gravatar.get($scope.order.billing.email, 100);
+    });
+        
 }])
    
 .controller('productSectionsCtrl', ['$scope', '$stateParams', 'shopFactory', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams, shopFactory) {
-    // newKey = firebase.database().ref('shop/products').push().key;
-    // firebase.database().ref('shop/products/'+newKey).set({'name':'pen','price':0.1});
-    // firebase.database().ref('shop/categories/products/'+newKey).set({'name':'pen','price':0.1});
-    
-    // newKey = firebase.database().ref('shop/products').push().key;
-    // firebase.database().ref('shop/products/'+newKey).set({'name':'USB Stick 8gb','price':6});
-    // firebase.database().ref('shop/categories/products/'+newKey).set({'name':'USB Stick 8gb','price':6,'category':});
-
-    // newKey = firebase.database().ref('shop/categories/' + $stateParams.category + '/sections').push().key;
-    // firebase.database().ref('shop/categories/' + $stateParams.category + '/sections/'+newKey).set({'name':'Stationary','key':newKey});
-    // firebase.database().ref('shop/sections/'+newKey).set({'name':'Stationary','key':newKey,'category':$stateParams.category});
-    // newKey = firebase.database().ref('shop/categories/' + $stateParams.category + '/sections').push().key;
-    // firebase.database().ref('shop/categories/' + $stateParams.category + '/sections/'+newKey).set({'name':'Stationary','key':newKey});
-    // firebase.database().ref('shop/sections/'+newKey).set({'name':'IT Materials','key':newKey,'category':$stateParams.category});
     console.log($stateParams);
     $scope.shop = [];
     $scope.shop = shopFactory;
@@ -291,7 +259,7 @@ function ($scope, $stateParams, shopFactory,$ionicListDelegate) {
     
     $scope.addToCart = function(d){
         $ionicListDelegate.closeOptionButtons();
-        alert(d);
+        //alert(d);
     };
 
 }])
