@@ -7,7 +7,6 @@ angular.module('authModule', [])
    
     $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
         //console.log("$stateChangeStart " + fromState.name + JSON.stringify(fromParams) + " -> " + toState.name + JSON.stringify(toParams));
-        console.log('search :'+window.location.search.substring(1));
         if((toState.name !== 'login' && toState.name !== 'signup') && $rootScope.user.name === 'User Name'){
             evt.preventDefault();
             $state.go('login',{'prevState': toState.name, 'prevParams': JSON.stringify(toParams)});
