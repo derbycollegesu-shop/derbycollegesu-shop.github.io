@@ -35,7 +35,7 @@ angular.module('authModule', [])
                 $rootScope.user.email_verified = user.emailVerified;
                 $ionicLoading.hide();
             }).then(function(){
-                
+                $timeout(function(){
                     if (($state.current.name === 'login') || ($state.current.name === 'signup')) {
                         angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('hiddenMenu');
                         $ionicHistory.nextViewOptions({disableBack: true});
@@ -47,13 +47,12 @@ angular.module('authModule', [])
                             $state.go('tabsController.homePage');
                         }
                     }
-
+                });
             });
         } else {
           if ($state.current.name !== 'login' && ($state.current.name !== 'signup')) {
             $state.go('login', {'prevState':$state.current.name});
           }
-          $ionicLoading.hide();
         }
         
     });
