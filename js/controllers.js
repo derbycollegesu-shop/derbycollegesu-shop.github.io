@@ -194,10 +194,10 @@ function ($scope, $stateParams, dataService, $timeout, $ionicLoading) {
     
 }])
    
-.controller('orderPageCtrl', ['$state', '$scope', '$stateParams', 'Gravatar', '$timeout', '$ionicLoading', 'authService', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('orderPageCtrl', ['$state', '$scope', '$stateParams', 'Gravatar', '$timeout', '$ionicLoading', 'authService', '$location', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($state, $scope, $stateParams, Gravatar, $timeout, $ionicLoading, authService) {
+function ($state, $scope, $stateParams, Gravatar, $timeout, $ionicLoading, authService, $location) {
     var p = $location.search(angular.extend($location.hash().substring($location.hash().indexOf('?') + 1)));
     console.log('params: ' +p);
     if($stateParams.id === '' && p.id === null){
