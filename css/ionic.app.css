@@ -9890,7 +9890,7 @@ a.button {
   font-size: 12px; }
 
 .grid-row.enrichment-calendar:nth-of-type(odd) {
-  background-color: #c8c8c8; }
+  background-color: #f0f0f0; }
   .grid-row.enrichment-calendar:nth-of-type(odd) [class*='grid-col-'] {
     margin-top: 9px; }
 
