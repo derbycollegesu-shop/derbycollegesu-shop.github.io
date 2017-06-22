@@ -1,19 +1,22 @@
 <ion-view id="page1" ng-controller="tabsCtrl">
   <ion-tabs class="tabs-stable tabs-icon-top &quot; delegate-handle=&quot;myTabs&quot;" id="tabsController-tabs1">
-    <ion-tab title="Home" icon="ion-ios-home-outline" href="#/tabs/home" id="tabsController-tab1" ng-click="tabIt(0,'tabsController.homePage')">
+    <ion-tab title="Home" icon="ion-ios-home-outline" href="#/tabs/home" id="tabsController-tab1" on-select="tabIt('tabsController.homePage')">
       <ion-nav-view name="tab1"></ion-nav-view>
     </ion-tab>
-    <ion-tab title="Shop" icon="ion-ios-cart-outline" href="#/tabs/shop" id="tabsController-tab2" ng-click="tabIt(1,'tabsController.shop')">
+    <ion-tab title="Shop" icon="ion-ios-cart-outline" href="#/tabs/shop" id="tabsController-tab2" on-select="tabIt('tabsController.shop')">
       <ion-nav-view name="tab2"></ion-nav-view>
     </ion-tab>
-    <ion-tab title="Enrichment" icon="ion-ios-calendar-outline" href="#/tabs/enrichment" id="tabsController-tab5" ng-click="tabIt(2,'tabsController.enrichment')">
+    <ion-tab title="Enrichment" icon="ion-ios-calendar-outline" href="#/tabs/enrichment" id="tabsController-tab5" on-select="tabIt('tabsController.enrichment')">
       <ion-nav-view name="tab5"></ion-nav-view>
     </ion-tab>
-    <ion-tab title="Admin" icon="ion-ios-cloud-outline" href="#/tabs/admin" id="tabsController-tab3" ng-show="$root.user.admin===true" ng-click="tabIt(3,'tabsController.adminPage')">
+    <ion-tab title="My Account" icon="ion-ios-person-outline" href="#/tabs/myaccount" id="tabsController-tab6" on-select="tabIt('tabsController.myAccount')" hidden="true">
+      <ion-nav-view name="tab6"></ion-nav-view>
+    </ion-tab>
+    <ion-tab title="Admin" icon="ion-ios-cloud-outline" href="#/tabs/admin" id="tabsController-tab3" ng-show="$root.user.admin===true" on-select="tabIt('tabsController.adminPage')">
       <ion-nav-view name="tab3"></ion-nav-view>
     </ion-tab>
     <ion-tab title="Notifications" icon="ion-android-notifications-none" href="#/tabs/notifications" id="tabsController-tab4" class="&quot; badge=&quot;badges.notifications&quot; badge-style=&quot;badge-assertive" ng-if="$root.badges.notifications > 0"
-      ng-click="tabIt(4,'tabsController.notifications')">
+      on-select="tabIt('tabsController.notifications')">
       <ion-nav-view name="tab4"></ion-nav-view>
     </ion-tab>
   </ion-tabs>

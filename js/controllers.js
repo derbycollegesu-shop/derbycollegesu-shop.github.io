@@ -259,13 +259,75 @@ function ($scope, $stateParams, shopFactory,$ionicListDelegate) {
 
 }])
    
-.controller('myAccountCtrl', ['$scope', 'authService', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('myAccountCtrl', ['$scope', 'authService', '$ionicPopup', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, authService) {
+function ($scope, authService, $ionicPopup, $timeout) {
     $scope.user = [];
     $scope.user = authService.getUser();
     console.log($scope.user);
+    
+    $scope.changePasswordPopup = function(){
+        $scope.passChange = {};
+        $scope.passChange.error = '';
+        
+        passChangePopup = $ionicPopup.show({
+          template: '<p ng-if="passChange.error!==\'\'"><font color="red">{{passChange.error}}</font></p><input type="password" ng-model="passChange.password" placeholder="Password"><input type="password" ng-model="passChange.confirm" placeholder="Confirm Password">',
+          title: 'Change Password',
+          subTitle: 'Please enter a new password / confirmation to change your password',
+          scope: $scope,
+          buttons: [
+           { 
+               text: 'Cancel', 
+               onTap: function(){
+                   passChangePopup.close();
+               }
+           },
+           {
+             text: '<b>Save</b>',
+             type: 'button-positive',
+             onTap: function(event) { 
+                 event.preventDefault(); 
+                 if($scope.passChange.password !== $scope.passChange.confirm || $scope.passChange.password === ''){
+                     $scope.passChange.error = 'Please enter correct details.';
+                 } else {
+                     user = firebase.auth().currentUser;
+                     user.updatePassword($scope.passChange.password).then(function() {
+                          console.log('Password Changed!');
+                          passChangePopup.close();
+                          donePopup = $ionicPopup.alert({
+                              title: 'Password Changed!', // String. The title of the popup.
+                              cssClass: '', // String, The custom CSS class name
+                              subTitle: 'Your password has been updated!', // String (optional). The sub-title of the popup.
+                              template: '', // String (optional). The html template to place in the popup body.
+                              templateUrl: '', // String (optional). The URL of an html template to place in the popup   body.
+                              okText: '', // String (default: 'OK'). The text of the OK button.
+                              okType: '', // String (default: 'button-positive'). The type of the OK button.
+                            });
+                          $timeout(function(){
+                              donePopup.close();
+                          }, 3000);
+                        }, function(error) {
+                          console.log('Problem changing password!');
+                          errorPopup = $ionicPopup.alert({
+                              title: '', // String. The title of the popup.
+                              cssClass: '', // String, The custom CSS class name
+                              subTitle: '', // String (optional). The sub-title of the popup.
+                              template: '', // String (optional). The html template to place in the popup body.
+                              templateUrl: '', // String (optional). The URL of an html template to place in the popup   body.
+                              okText: '', // String (default: 'OK'). The text of the OK button.
+                              okType: '', // String (default: 'button-positive'). The type of the OK button.
+                            });
+                          $timeout(function(){
+                              errorPopup.close();
+                          }, 3000);
+                        });
+                 }
+             }
+           }
+          ]
+        });  
+    };
     $scope.logout = function(){
         firebase.auth().signOut();
     };

@@ -110,10 +110,14 @@ angular.module('app.routes', [])
     }
   })
 
-  .state('myAccount', {
+  .state('tabsController.myAccount', {
     url: '/myaccount',
-    templateUrl: 'templates/myAccount.html',
-    controller: 'myAccountCtrl'
+    views: {
+      'tab6': {
+        templateUrl: 'templates/myAccount.html',
+        controller: 'myAccountCtrl'
+      }
+    }
   })
 
   .state('tabsController.notifications', {
