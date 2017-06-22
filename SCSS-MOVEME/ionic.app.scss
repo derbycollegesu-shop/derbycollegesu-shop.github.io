@@ -129,13 +129,29 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 [class*='grid-col-'] > p {
-	background-color: #FFC2C2;
 	padding: 0;
 	margin: 0;
 	text-align: center;
-	color: white;
 }
 
+.grid-row.enrichment-calendar {
+	[class*='grid-col-'] {
+		font-size: 12px;
+	}
+	
+}
+.grid-row.enrichment-calendar: nth-of-type(odd) {
+	background-color: rgb(200,200,200);
+	[class*='grid-col-'] {
+		margin-top: 9px;
+	}
+	
+}
+// .grid-row.enrichment-calendar div: first-of-type {
+	//     p {
+		//     text-align: left;
+		//}
+	//}
 @media all and (min-width: 801px) {
 	.grid-col-1 {
 		width: calc(16.66% - 12px);
@@ -161,32 +177,52 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 		width: calc(100% - 12px);
 	}
 	
+	.grid-col-25 {
+		width: calc(25% - 12px);
+	}
+	
 }
 @media all and (max-width: 800px) {
 	.grid-col-1-md {
-		width: calc(33.33% - 12px);
+		width: calc(25% - 12px);
 	}
 	
 	.grid-col-2-md {
-		width: calc(50% - 12px);
+		width: calc(33.33% - 12px);
 	}
 	
 	.grid-col-3-md {
-		width: calc(66.66% - 12px);
+		width: calc(50% - 12px);
 	}
 	
 	.grid-col-4-md {
+		width: calc(66.66% - 12px);
+	}
+	
+	.grid-col-5-md {
+		width: calc(75% - 12px);
+	}
+	
+	.grid-col-6-md {
 		width: calc(100% - 12px);
 	}
 	
+	.grid-col-md-hidden {
+		display: none;
+	}
+	
 }
-@media all and (max-width: 600px) {
+@media all and (max-width: 480px) {
 	.grid-col-1-sm {
 		width: calc(50% - 12px);
 	}
 	
 	.grid-col-2-sm {
 		width: calc(100% - 12px);
+	}
+	
+	.grid-col-sm-hidden {
+		display: none;
 	}
 	
 }

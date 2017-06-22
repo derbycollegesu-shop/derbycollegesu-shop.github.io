@@ -6,11 +6,14 @@
     <ion-tab title="Shop" icon="ion-ios-cart-outline" href="#/tabs/shop" id="tabsController-tab2" ng-click="tabIt(1,'tabsController.shop')">
       <ion-nav-view name="tab2"></ion-nav-view>
     </ion-tab>
-    <ion-tab title="Admin" icon="ion-ios-cloud-outline" href="#/tabs/admin" id="tabsController-tab3" ng-show="$root.user.admin===true" ng-click="tabIt(2,'tabsController.adminPage')">
+    <ion-tab title="Enrichment" icon="ion-ios-calendar-outline" href="#/tabs/enrichment" id="tabsController-tab5" ng-click="tabIt(2,'tabsController.shop')">
+      <ion-nav-view name="tab5"></ion-nav-view>
+    </ion-tab>
+    <ion-tab title="Admin" icon="ion-ios-cloud-outline" href="#/tabs/admin" id="tabsController-tab3" ng-show="$root.user.admin===true" ng-click="tabIt(3,'tabsController.adminPage')">
       <ion-nav-view name="tab3"></ion-nav-view>
     </ion-tab>
     <ion-tab title="Notifications" icon="ion-android-notifications-none" href="#/tabs/notifications" id="tabsController-tab4" class="&quot; badge=&quot;badges.notifications&quot; badge-style=&quot;badge-assertive" ng-if="$root.badges.notifications > 0"
-      ng-click="tabIt(3,'tabsController.notifications')">
+      ng-click="tabIt(4,'tabsController.notifications')">
       <ion-nav-view name="tab4"></ion-nav-view>
     </ion-tab>
   </ion-tabs>

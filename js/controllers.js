@@ -278,4 +278,63 @@ function ($scope, $stateParams) {
 
 
 }])
+   
+.controller('enrichmentCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+    $scope.enrichmentTeams = [];
+    $scope.enrichmentActivities = [];
+    
+    $scope.enrichmentActivities = [
+        {
+            teamlogo: "http://www.derby-college.ac.uk/images/EvolveLogo.png",
+            title: "Basket Ball",
+            description: "Come along and play basket ball ...",
+            cost: "£2.00",
+            places: "35",
+            when: "Wed @ 2pm"
+        },
+        {
+            teamlogo: "http://shop.dcsu.co.uk/wp-content/uploads/2014/09/SU-General-Logo-Transparent-Background-2.png",
+            title: "I Heart SU's Campaign",
+            description: "We are looking for volunteers to help out run this campaign",
+            cost: "FREE",
+            places: "10",
+            when: "Thurs all day"
+        },
+        {
+            teamlogo: "http://www.footfalladvertising.co.uk/wp-content/uploads/2017/01/dc-1.jpg",
+            title: "CV Writing Skills Forum",
+            description: "Brush up on your CV Writing skills here",
+            cost: "FREE",
+            places: "20",
+            when: "Friday 4pm"
+        }
+        ];
+    
+    $scope.enrichmentTeams = [
+        {
+            title: "Evolve Team",
+            logo: "http://www.derby-college.ac.uk/images/EvolveLogo.png",
+            text: "The evolve team ..."
+        },
+        {
+            title: "Students' Union",
+            logo: "http://shop.dcsu.co.uk/wp-content/uploads/2014/09/SU-General-Logo-Transparent-Background-2.png",
+            text: "Derby College Students' Union"
+        },
+        {
+            title: "Work Experience Team",
+            logo: "http://www.footfalladvertising.co.uk/wp-content/uploads/2017/01/dc-1.jpg",
+            text: "Text about the Work Experience Team"
+        },
+        {
+            title: "Personal Coach Team",
+            logo: "http://www.footfalladvertising.co.uk/wp-content/uploads/2017/01/dc-1.jpg",
+            text: "Text about the Personal Coach Team"
+        }
+    ];
+
+}])
  

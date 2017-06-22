@@ -126,7 +126,17 @@ angular.module('app.routes', [])
     }
   })
 
-$urlRouterProvider.otherwise('/tabs/home')
+  .state('tabsController.enrichment', {
+    url: '/enrichment',
+    views: {
+      'tab5': {
+        templateUrl: 'templates/enrichment.html',
+        controller: 'enrichmentCtrl'
+      }
+    }
+  })
+
+$urlRouterProvider.otherwise('/tabs/notifications')
 
 
 });

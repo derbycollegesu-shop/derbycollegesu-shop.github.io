@@ -1,0 +1,77 @@
+<ion-view title="Enrichment" id="page9">
+  <ion-content padding="true" class="has-header">
+    <ion-list id="enrichment-list11">
+      <ion-item class="item-divider" id="enrichment-list-item-divider6"> Activities w/c 22nd June</ion-item>
+    </ion-list>
+    <div id="enrichment-container84" class="grid-container outline">
+      <div id="enrichment-container69" class="grid-row">
+        <div id="enrichment-container63" class="grid-col-1 grid-col-1-sm grid-col-1-md">
+          <p>
+            <b>Title</b>
+          </p>
+        </div>
+        <div id="enrichment-container64" class="grid-col-2 grid-col-1-sm grid-col-1-md grid-col-sm-hidden">
+          <p>
+            <b>Description</b>
+          </p>
+        </div>
+        <div id="enrichment-container65" class="grid-col-1 grid-col-1-md grid-col-1-sm grid-col-sm-hidden">
+          <p>
+            <b>Cost</b>
+          </p>
+        </div>
+        <div id="enrichment-container66" class="grid-col-1 grid-col-1-sm grid-col-sm-hidden grid-col-1-md grid-col-md-hidden">
+          <p>
+            <b># Places</b>
+          </p>
+        </div>
+        <div id="enrichment-container67" class="grid-col-1 grid-col-1-md grid-col-1-sm">
+          <p>
+            <b>When</b>
+          </p>
+        </div>
+      </div>
+      <div id="enrichment-container134" ng-repeat="activity in enrichmentActivities" class="grid-row enrichment-calendar">
+        <div id="enrichment-container129" class="grid-col-1 grid-col-1-sm grid-col-1-md">
+          <p>
+            <img src="{{activity.teamlogo}}" style="max-height:20px; margin-bottom:-5px; margin-right:10px">{{activity.title}}</p>
+        </div>
+        <div id="enrichment-container130" class="grid-col-2 grid-col-sm-hidden grid-col-1-md">
+          <p>{{activity.description}}</p>
+        </div>
+        <div id="enrichment-container131" class="grid-col-1 grid-col-1-md grid-col-1-sm grid-col-sm-hidden">
+          <p>{{activity.cost}}</p>
+        </div>
+        <div id="enrichment-container132" class="grid-col-1 grid-col-1-sm grid-col-sm-hidden grid-col-md-hidden">
+          <p>{{activity.places}}</p>
+        </div>
+        <div id="enrichment-container133" class="grid-col-1 grid-col-1-sm grid-col-1-md">
+          <p>{{activity.when}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="spacer" style="width: 1004px; height: 57px;"></div>
+    <ion-list id="enrichment-list13">
+      <ion-item class="item-divider" id="enrichment-list-item-divider10"> Enrichment Teams</ion-item>
+    </ion-list>
+    <div id="enrichment-container106" class="grid-container outline">
+      <div id="enrichment-container91" class="grid-row">
+        <div id="enrichment-container85" ng-repeat="team in enrichmentTeams" class="grid-col-25 grid-col-1-sm grid-col-1-md">
+          <div class="list card" id="enrichment-card23">
+            <div class=" item item-image">
+              <img src="{{team.logo}}" style="display: block; width: auto; height: 40px; margin-left: auto; margin-right: auto;">
+            </div>
+            <ion-item class="item-divider" id="enrichment-list-item-divider5"> {{team.title}}</ion-item>
+            <div class="item item-body" id="enrichment-list-item-container7">
+              <div id="enrichment-markdown11" style="height: 200px !important; min-height:200px !important; overflow: hidden" class="show-list-numbers-and-dots">
+                <p style="margin-top:0px;color:#000000;">{{team.text}}</p>
+              </div>
+            </div>
+            <ion-item class="item-icon-left assertive" id="enrichment-list-item28">
+              <i class="icon ion-link"></i>Visit page</ion-item>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
