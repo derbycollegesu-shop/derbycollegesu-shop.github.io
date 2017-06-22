@@ -1,6 +1,6 @@
 <ion-view title="Order Page" cache-view="false" id="page8">
   <ion-content padding="true" class="has-header">
-    <div class="list card" id="orderPage-card21">
+    <div class="list card" id="orderPage-card21" ng-if="order">
       <ion-item class="item-thumbnail-left" id="orderPage-list-item9">
         <img src="{{gravImg}}">
         <h2>Order #{{order.number}}</h2>
@@ -18,7 +18,7 @@
       </ion-item>
       <ion-item class="item-divider" id="orderPage-list-item-divider4" ng-if="order.coupon_lines"> Coupons Used</ion-item>
       <ion-item id="orderPage-list-item16" ng-repeat="coupon in order.coupon_lines">{{coupon.code}}
-        <span class="item-note">£{{coupon.discount}}</span>
+        <span class="item-note">{{coupon.discount}}</span>
       </ion-item>
       <ion-item class="item-divider" id="orderPage-list-item-divider2"> Order Details</ion-item>
       <div class="item item-body" id="orderPage-list-item-container3">

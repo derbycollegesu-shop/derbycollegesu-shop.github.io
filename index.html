@@ -84,13 +84,13 @@
       <ion-content ng-controller="menuCtrl" padding="false" class="side-menu-left has-header ">
         <div class="profile-image" data-componentid="image3">
           <a style="display:block;" ui-sref="myAccount()" menu-close="">
-            <img src="{{user.gravImg}}" style="display: block; width: 40%; height: auto; margin-left: auto; margin-right: auto;">
+            <img src="{{auth.user.photoURL}}" style="display: block; width: 40%; height: auto; margin-left: auto; margin-right: auto;">
           </a>
         </div>
-        <div class="verified-tick" ng-show="user.email_verified" data-componentid="image4">
+        <div class="verified-tick" ng-show="auth.user.emailVerified" data-componentid="image4">
           <img src="img/8lFaWWFPQ7G3GXPVcurJ_tick.png" style="display: block; width: 10%; height: auto; margin-left: auto; margin-right: auto;">
         </div>
-        <h3 id="menu-heading1" ui-sref="myAccount" menu-close="true" style="color:#000000;font-weight:300;text-align:center;" data-componentid="heading1">{{user.name}}</h3>
+        <h3 id="menu-heading1" ui-sref="myAccount" menu-close="true" style="color:#000000;font-weight:300;text-align:center;" data-componentid="heading1">{{auth.user.displayName}}</h3>
         <ion-list id="menu-list5" data-componentid="list5">
           <ion-item id="menu-list-item14" ui-sref="myAccount()" menu-close="" class="account-item" data-componentid="list-item14">My Account</ion-item>
           <ion-item id="menu-list-item15" class="account-item" data-componentid="list-item15">Item 2</ion-item>

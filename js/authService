@@ -2,77 +2,91 @@
 
 angular.module('authModule', [])
 
-.run(['$state', '$rootScope', 'Gravatar', '$ionicLoading', '$stateParams', '$timeout', '$ionicHistory','$ionicTabsDelegate', '$location', function($state, $rootScope, Gravatar, $ionicLoading, $stateParams, $timeout, $ionicHistory,$ionicTabsDelegate, $location){
+.run(function($state, $rootScope, Gravatar, $ionicLoading, $stateParams, $timeout, $ionicHistory, $ionicTabsDelegate, $ionicSideMenuDelegate, $location, authService){
+    
+    var authChanging = false;
+    $rootScope.user = [];
     
    
     $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
-        console.log("$stateChangeStart " + fromState.name + JSON.stringify(fromParams) + " -> " + toState.name + JSON.stringify(toParams));
-        if(fromState.name === '') console.log('No Prev State: ' + $location.search());
-        if((toState.name !== 'login' && toState.name !== 'signup') && $rootScope.user.name === 'User Name'){
+        if((toState.name !== 'login' && toState.name !== 'signup') && !authService.isAuthenticated() && !authChanging){
             evt.preventDefault();
-            //console.log(fromParams.prevState===undefined);
-            if(fromParams.prevState !== undefined){
-                to = $stateParams.prevState; 
-                toP = $stateParams.toParams;
-            } else {
-                to = toState.name;
-                toP = JSON.stringify($location.search());
-            }
-            console.log(to, toP);
-            $state.go('login',{'prevState': to, 'prevParams': toP});
-            //console.log('moved');
-        }
-    });
-    // $rootScope.$on('$stateChangeSuccess', function(){
-    //     if(($state.current.name !== 'login' && $state.current.name !== 'signup') && $rootScope.user.name === 'User Name'){
+            // Set state to move on to when logged in
+            console.log('Set next state to: ' + toState.name);
+            authService.setNextState(toState.name, toParams); 
+            $state.go('login');
+        } else {
             
-    //     }
-    // });
+            //authService.setNextState(, toParams); 
+        }   // REdIRECT TO LOGIN PAGE IF NOT THERE AND USER NOT LOGGED IN
+    });
     
     firebase.auth().onAuthStateChanged(function(user) {
-        //console.log('authed');
+        authChanging= true;
+        console.log('prevented state change');
         $ionicLoading.show({
             template: '<p>Loading it...</p><ion-spinner></ion-spinner>'
         });
-        $rootScope.user = [];
-        //$rootScope.badges = [];
-        
-        if (user && $state.current.name !== 'signup') {
-            firebase.database().ref('users/'+user.uid).once('value', function(snapshot){
-                $rootScope.user = snapshot.val();
-                $rootScope.user.gravImg = user.photoURL;
-                $rootScope.user.email_verified = user.emailVerified;
-                $ionicLoading.hide();
-            }).then(function(){
-                
-                    if (($state.current.name === 'login') || ($state.current.name === 'signup')) {
-                        angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('hiddenMenu');
-                        $ionicHistory.nextViewOptions({disableBack: true});
-                        if($stateParams.prevState !== ''){
-                            console.log('moving to '+$stateParams.prevState + ' ' + $stateParams.prevParams);
-                            $state.go($stateParams.prevState, JSON.parse($stateParams.prevParams));
-                        }else{
-                            //console.log('moving to home');
-                            $state.go('tabsController.homePage');
-                        }
-                    }
+        if(user){ //USER LOGGED IN
+            authService.user = user;
+            authService.setUser(user);
+            $ionicLoading.hide();
+            //HIDE BACK BUTTON
+            console.log('going' + authService.getNextState().state);
+            
+            //console.log('going');
+            angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('hiddenMenu');
+            //console.log('going');
+            $ionicHistory.nextViewOptions({disableBack: true});
+            //console.log('going');
+            $state.go(authService.getNextState().state);//redirect to prev state OR home page
 
-            });
-        } else {
-          if ($state.current.name !== 'login' && ($state.current.name !== 'signup')) {
-            $state.go('login', {'prevState':$state.current.name});
-          }
-          $ionicLoading.hide();
+            $ionicSideMenuDelegate.canDragContent(true);
+        } else { //USER HAS BEEN LOGGED OUT
+            $ionicLoading.hide();
+            // User NOT logged in and not at login = direct there.
+            if($state.current.name !== 'login') $state.go('login'); 
         }
-        
+        authChanging = false;
     });
-}])
+})
 
 
 .service('authService', [function(){
     var user_authenticated = false;
+    var current_user = [];
+    var logging_out = false;
+    var logging_in = false;
+    var nextState = 'tabsController.homePage'; // State in which to move on to when logged in
+    var nextParams = {}; // Params to pass on redirect
+    
     return {
-        isAuthenticated: true
+        setUser: function(user){
+            if(user){   
+                current_user = user;
+                console.log(current_user);
+                user_authenticated = true;
+                return true;
+            }
+            console.log('user not saved!');
+            return false;
+        },
+        getUser: function(){
+            return current_user;
+        },
+        user: current_user,
+        isAuthenticated: function(){
+            return user_authenticated;
+        },
+        setNextState: function(toState, toParams){
+            if(toState === 'login') toState = 'tabsController.homePage';
+            console.log('nextState:' + toState);
+            nextState = toState;
+            nextParams = toParams;
+        },
+        getNextState: function(){
+            return {'state': nextState, 'params': nextParams};
+        }
     };
 }]);
 

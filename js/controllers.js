@@ -1,10 +1,11 @@
 angular.module('app.controllers', [])
   
-.controller('menuCtrl', ['$scope', '$location', '$state', '$stateParams', 'Gravatar', '$ionicHistory', '$rootScope', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('menuCtrl', ['$scope', 'authService', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $location, $state, $stateParams, Gravatar, $ionicHistory, $rootScope) {
-    
+function ($scope, authService) {
+    $scope.auth = [];
+    $scope.auth = authService;
 }])
    
 .controller('homePageCtrl', ['$scope', '$stateParams', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
@@ -71,50 +72,23 @@ function ($scope, $stateParams) {
 
 }])
       
-.controller('loginCtrl', ['$scope', '$stateParams', '$ionicLoading', '$ionicHistory', '$timeout', '$location', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('loginCtrl', ['$scope', '$stateParams', '$ionicLoading', '$ionicHistory', '$timeout', '$location', '$ionicSideMenuDelegate', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $ionicLoading, $ionicHistory, $timeout, $location) {
+function ($scope, $stateParams, $ionicLoading, $ionicHistory, $timeout, $location, $ionicSideMenuDelegate) {
    
    $scope.$on('$ionicView.beforeEnter', function(){
         $timeout(function(){
             $ionicHistory.removeBackView();
             $ionicHistory.clearHistory();
             $ionicHistory.clearCache();
+            
             console.log('history cleared');
         });
-       angular.element(document.getElementsByTagName('ion-side-menu-content')).addClass('hiddenMenu');
-   });
+        $ionicSideMenuDelegate.canDragContent(false);
+        angular.element(document.getElementsByTagName('ion-side-menu-content')).addClass('hiddenMenu');
+    });
    
-   //console.log($stateParams);
-   
-   //$rootScope.hideNav = true;
-   
-    // var myPopupScope = $rootScope.$new();
-    // myPopupScope.userDetails = [];
-    // myPopupScope.login2 = function() {
-    //      if (myPopupScope.userDetails) logIn(myPopupScope.userDetails.useremail,myPopupScope.userDetails.userpassword);
-    // };
-    // myLoginPopup = $ionicPopup.show({
-    //      template: '<input type = "text" placeholder = "Email Address" ng-model = "userDetails.useremail"><br/><input type = "password" placeholder = "Password" ng-enter="login2()" ng-model = "userDetails.userpassword">',
-    //      title: 'Login',
-    //      subTitle: 'You must be a registered user to view this information!',
-    //      scope: myPopupScope,
-    //      buttons: [
-    //         {
-    //           text: '<b>Save</b>',
-    //           type: 'button-positive',
-    //               onTap:  function(e) {
-    //                  if (!myPopupScope.userDetails) {
-    //                     e.preventDefault();
-    //                  } else {
-    //                     logIn(myPopupScope.userDetails.useremail,myPopupScope.userDetails.userpassword);
-    //                     e.preventDefault();
-    //                  }
-    //             }
-    //         }
-    //      ]
-    //   });
     $scope.userdetails = [];
     $scope.userdetails.staffLogon = false;
     $scope.loginError = '';
@@ -144,15 +118,16 @@ function ($scope, $stateParams, $ionicLoading, $ionicHistory, $timeout, $locatio
     console.log($location.search());
 }])
    
-.controller('signupCtrl', ['$scope', '$stateParams', '$ionicLoading', '$rootScope', '$state', 'Gravatar', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('signupCtrl', ['$scope', '$stateParams', '$ionicLoading', '$rootScope', '$state', 'Gravatar', '$ionicSideMenuDelegate', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $ionicLoading, $rootScope, $state, Gravatar) {
+function ($scope, $stateParams, $ionicLoading, $rootScope, $state, Gravatar, $ionicSideMenuDelegate) {
     $scope.userdetails = [];
     $scope.userdetails.staffLogon = false; //Make default student signup
     $scope.loginError = '';
     
     $scope.$on('$ionicView.beforeEnter', function(){
+        $ionicSideMenuDelegate.canDragContent(false);
         angular.element(document.getElementsByTagName('ion-side-menu-content')).addClass('hiddenMenu');
     });
    
@@ -198,38 +173,51 @@ function ($scope, $stateParams, $ionicLoading, $rootScope, $state, Gravatar) {
    };
 }])
    
-.controller('ordersPageCtrl', ['$scope', '$stateParams', 'dataService', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('ordersPageCtrl', ['$scope', '$stateParams', 'dataService', '$timeout', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, dataService) {
-    $scope.orders = [];
-    $scope.orders = dataService.data;
-    
-
-    firebase.database().ref('orderList').on('value', function(snapshot){
-         $scope.orders = Object.keys(snapshot.val()).map(function (key) { return snapshot.val()[key]; });
+function ($scope, $stateParams, dataService, $timeout, $ionicLoading) {
+    $ionicLoading.show({
+        template: '<p>Loading...</p><ion-spinner></ion-spinner>'
     });
-    
+    firebase.database().ref('orderList').on('value', function(snapshot){
+        $scope.orders = [];
+        $scope.orders = Object.keys(snapshot.val()).map(function (key) { return snapshot.val()[key]; });
+        $timeout(function(){
+            $scope.$apply();
+            $ionicLoading.hide();
+        });
+    });
     $scope.logout = function(){
         firebase.auth().signOut();
     };
     
 }])
    
-.controller('orderPageCtrl', ['$state', '$scope', '$stateParams', 'Gravatar', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('orderPageCtrl', ['$state', '$scope', '$stateParams', 'Gravatar', '$timeout', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($state, $scope, $stateParams, Gravatar) {
+function ($state, $scope, $stateParams, Gravatar, $timeout, $ionicLoading) {
     if($stateParams.id === ''){
         $state.go('tabsController.ordersPage');
         return;
     }
     
-    $scope.order = [];
-    
+    $ionicLoading.show({
+        template: '<p>Loading...</p><ion-spinner></ion-spinner>'
+    });
     firebase.database().ref('newOrders/' + $stateParams.id).once('value', function(snapshot){
+        $scope.order = [];
         $scope.order = snapshot.val();
         $scope.gravImg = Gravatar.get($scope.order.billing.email, 100);
+        // for (var i=0; i< $scope.order.coupon_lines.length(); i++){
+        //   console.log($scope.order); 
+        // }
+        //console.log($scope.order.coupon_lines[0].coupon.discount.toLocaleString('en-GB', { style: 'currency', currency: 'GBP' }));
+        $timeout(function(){
+            $scope.$apply();
+            $ionicLoading.hide();
+        });
     });
         
 }])
@@ -267,10 +255,13 @@ function ($scope, $stateParams, shopFactory,$ionicListDelegate) {
 
 }])
    
-.controller('myAccountCtrl', ['$scope', '$stateParams', 'Gravatar', '$rootScope', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('myAccountCtrl', ['$scope', 'authService', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, Gravatar, $rootScope) {
+function ($scope, authService) {
+    $scope.user = [];
+    $scope.user = authService.getUser();
+    console.log($scope.user);
     $scope.logout = function(){
         firebase.auth().signOut();
     };
