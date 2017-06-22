@@ -13,7 +13,7 @@ angular.module('authModule', [])
             evt.preventDefault();
             // Set state to move on to when logged in
             toParams = $location.search(angular.extend($location.hash().substring($location.hash().indexOf('?') + 1)));
-            console.log('from search: ', $location.search());
+            console.log('from search: ', JSON.stringify($location.search()));
             authService.setNextState(toState.name, toParams); 
             $state.go('login');
         } else {

@@ -115,7 +115,7 @@ function ($scope, $stateParams, $ionicLoading, $ionicHistory, $timeout, $locatio
         });
     };
     
-    console.log($location.search());
+    //console.log($location.search());
 }])
    
 .controller('signupCtrl', ['$scope', '$stateParams', '$ionicLoading', '$rootScope', '$state', 'Gravatar', '$ionicSideMenuDelegate', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
