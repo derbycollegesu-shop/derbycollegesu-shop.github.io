@@ -12,7 +12,7 @@ angular.module('authModule', [])
         if((toState.name !== 'login' && toState.name !== 'signup') && !authService.isAuthenticated() && !authChanging){
             evt.preventDefault();
             // Set state to move on to when logged in
-            console.log('Set next state to: ' + toState.name);
+            toParams = $location.search(angular.extend($location.hash().substring($location.hash().indexOf('?') + 1)));
             authService.setNextState(toState.name, toParams); 
             $state.go('login');
         } else {
@@ -80,7 +80,8 @@ angular.module('authModule', [])
         },
         setNextState: function(toState, toParams){
             if(toState === 'login') toState = 'tabsController.homePage';
-            console.log('nextState:' + toState);
+            console.log('nextState: ' + toState);
+            console.log('nextParams: ' + toParams);
             nextState = toState;
             nextParams = toParams;
         },
