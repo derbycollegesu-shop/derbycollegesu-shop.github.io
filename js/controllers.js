@@ -205,6 +205,8 @@ function ($state, $scope, $stateParams, Gravatar, $timeout, $ionicLoading, authS
         return;
     }
     
+    console.log($stateParams);
+
     $ionicLoading.show({
         template: '<p>Loading...</p><ion-spinner></ion-spinner>'
     });
