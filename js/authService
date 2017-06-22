@@ -15,7 +15,7 @@ angular.module('authModule', [])
             toParams = $location.search(angular.extend($location.hash().substring($location.hash().indexOf('?') + 1)));
             console.log('from search: ', JSON.stringify($location.search()));
             authService.setNextState(toState.name, toParams); 
-            $state.go('login');
+            $timeout($state.go('login'));
         } else {
             
             //authService.setNextState(, toParams); 
