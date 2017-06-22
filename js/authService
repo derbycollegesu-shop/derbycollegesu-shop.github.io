@@ -6,14 +6,14 @@ angular.module('authModule', [])
     
     var authChanging = false;
     $rootScope.user = [];
-    console.log('Derby College SU project v1.1')
+    console.log('Derby College SU project v1.2')
    
     $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
         if((toState.name !== 'login' && toState.name !== 'signup') && !authService.isAuthenticated() && !authChanging){
             evt.preventDefault();
             // Set state to move on to when logged in
             toParams = $location.search(angular.extend($location.hash().substring($location.hash().indexOf('?') + 1)));
-            console.log('from search: ', $location.search(angular.extend($location.hash().substring($location.hash().indexOf('?') + 1))));
+            console.log('from search: ', JSON.stringify($location.search(angular.extend($location.hash().substring($location.hash().indexOf('?') + 1)))));
             authService.setNextState(toState.name, toParams); 
             $timeout($state.go('login'));
         } else {
