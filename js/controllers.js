@@ -199,7 +199,7 @@ function ($scope, $stateParams, dataService, $timeout, $ionicLoading) {
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($state, $scope, $stateParams, Gravatar, $timeout, $ionicLoading, authService) {
     var p = $location.search(angular.extend($location.hash().substring($location.hash().indexOf('?') + 1)));
-    console.log(p);
+    console.log('params: ' +p);
     if($stateParams.id === '' && p.id === null){
         //$state.go('tabsController.ordersPage');
         return;
