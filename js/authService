@@ -39,7 +39,7 @@ angular.module('authModule', [])
             //console.log('going');
             $ionicHistory.nextViewOptions({disableBack: true});
             //console.log('going');
-            $state.go(authService.getNextState().state);//redirect to prev state OR home page
+            $state.go(authService.getNextState().state, authService.getNextState.params);//redirect to prev state OR home page
 
             $ionicSideMenuDelegate.canDragContent(true);
         } else { //USER HAS BEEN LOGGED OUT
