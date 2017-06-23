@@ -296,29 +296,95 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	}
 	
 }
+.tabs {
+	border-top: 0px !important;
+	padding-top: 2px !important;
+}
+
 .full-width {
 	//ideal for subheader
-	    margin: -12px -12px auto -12px;
-	padding: 6px 6px 6px 10px;
+	    margin-right: -12px;
+	margin-left: -12px;
 	width: calc(100% + 24px);
-	display: block;
-	height: 36px;
 	background-color: #1e1e1e;
-	img {
-		display: block;
-		float: left;
+	display: block;
+	&.button-bar {
+		background-color: white;
+		div {
+			margin: 0px auto;
+			max-width: 400px;
+			text-align: center;
+		}
+		
+		.button {
+			border-radius: 0px;
+			font-size: 0.8em;
+			color: #FFF !important;
+			padding: 6px 12px 6px 12px !important;
+			height: 40px !important;
+			max-height: 40px !important;
+			width: 100px;
+			min-width: 100px;
+			display: inline;
+			margin-right: -2px;
+			background-color: #ff51d8;
+		}
+		
+		.button: first-of-type {
+			border-radius: 5px 0px 0px 5px;
+		}
+		
+		.button: last-of-type {
+			border-radius: 0px 5px 5px 0px;
+			margin-right: 0px;
+		}
+		
+	}
+	&.header {
+		padding: 6px 6px 6px 10px;
+		margin: -12px -12px auto -12px;
+		background-color: #1e1e1e;
+		height: 36px;
+		img {
+			display: block;
+			float: left;
+		}
+		
+		p: : before {
+			content: '  ';
+		}
+		
+		p {
+			font-size: 1.1em;
+			display: block;
+			line-height: 24px;
+			vertical-align: middle;
+			color: #fff;
+		}
+		
+	}
+	&.footer {
+		padding: 20px 10px 6px 10px;
+		margin: 0px -12px -12px -12px;
+		h6 {
+			color: #FFF;
+		}
+		
+		background-color: #1e1e1e;
+		color: #FFF;
 	}
 	
-	p: : before {
-		content: '  ';
+}
+// This code is required for Angular Google Maps to funciton
+ui-gmap-google-map {
+	height: 100%;
+	width: 100%;
+	display: block;
+	.angular-google-map {
+		height: 100%;
+		.angular-google-map-container {
+			height: 100%;
+		}
+		
 	}
-	
-	p {
-		font-size: 1.1em;
-		display: block;
-		line-height: 24px;
-		vertical-align: middle;
-		color: #fff;
-	}
-	
 }
