@@ -9937,7 +9937,9 @@ a.button {
   .grid-col-2-sm {
     width: calc(100% - 12px); }
   .grid-col-sm-hidden {
-    display: none; } }
+    display: none; }
+  .footer .grid-col-2-sm {
+    text-align: center; } }
 
 .cat-buttons {
   height: 43px; }
