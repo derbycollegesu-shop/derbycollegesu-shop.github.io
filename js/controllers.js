@@ -1,11 +1,21 @@
 angular.module('app.controllers', [])
   
-.controller('menuCtrl', ['$scope', 'authService', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('menuCtrl', ['$scope', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, authService) {
-    $scope.auth = [];
-    $scope.auth = authService;
+function ($scope) {
+    var pinned = false;
+    $scope.permaMenu = function(){
+        if(!pinned) {
+            pinned = true;
+            angular.element(document.getElementsByTagName('ion-side-menu-content')).addClass('permaMenu');
+            angular.element(document.getElementById('permaPin')).attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAADv0lEQVRoQ82ajZENQRDH+yIgA0RwRIAIuAxOBIiAiwARIAJEgAgQgZOBi4D6Xc3/VRszu9Mz+/G2St29d7s7/Zv+7nFix3O9MLNnSZznZvYuItpJ5OYV731tZk+z9z+JwBwDyGMz+2BmV2bG77fN7G2CaobZG+Smmf00M35iTmiG6zwKszfIZzN7YGafkja8dYVg9gTBsV8lk8Kcfhd8sBlmL5C7ZvYtCX5mZh8nAkkTzB4g+AMmBcwbF3KnguIszB4gCrU/kn+UTKoENQmzNYhCLYLeM7PvwdxUhdkSpBZqgyzl0LwliELt12RSUYDJ0LwGCE58I62KH+ADLaE2CubN7GwUBHN5lJIZiY3P+QWIvp8Ltb0wl70gCEaR97KwsrTAn0h0t9I971PpERV26n7lo6seEFRKRtYuY/MkNP5dFlblPhb8siRB2hTJcREFoSoFhAsANLK0gHO8bAxyEMq5rjUdAVHU4eGLilnNCTH6d4QHAhjKfoLIdQMWASF5naYk9rBS5I0KWns+1wLWgGUcTDkCwsswo61hiIY0XtIC5qy+5QAeAeGhLWFYy/fx/2nBqy8KshUMWsAXCN9cvnssml8PyJowuRbISfjCbHHZC7IGDLtPZJQWQpFxBGRpGMwJkF8pR8xqYdRHchtdKgCgCSYqhNQ70Tg+qhGtR0gkwnCxk715hgKTyjksV/iBwk75rg+zoEjshSFP3U8bESp9RkEwB6YhGrBRLowkzV1A/DTED9hGfIZNoVLGR0qVdNV1RjSiSrg0DQEG84qa2Z8kaViu8ANpId+6EjbzUInj+6arxWcOTVKl05wMZD0give8OG9d8yqV0oLM3FJoanO6OskoiHfuPPOyo5gbP3VEgPO2+oz6neajhJGEKGfMRzq+/cVnCMneWedgpGU2oDbQXsy05NzkCnZdo076Zh2ZYRb8XhqDTsFog0L1VY9GNENix+TcCEbDw+emUrtiZoATHLq1weItPuKPAGS/fAcEZuDhWkokrxnMT9Vul29owTkQP6/VEYCf8EUn6lrXw/Bd6/FCd0JUJEFgRSWNg7rCpJNEMGhFo50WjRbvmdKIzjEwHZmSQuthDNO98sIP1kDycwhN9LqanoVlbtYIu45JqV7iMxe5AxNoPWHaQv7DGrlGEJ6YrkiiG4edcW2qHISQ6h3vn7Hk2sKMvN+D+HaVdzaPYkYEWOpZgfh2lXfTKOHwR+kPJXhAvHNzT3e9s9Tu9rwHEBVs+ANamPpfCD1rbPIMIOrumkaTm0jVschfqfgJ4V03DZ8AAAAASUVORK5CYII=');
+        } else {
+            pinned = false;
+            angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('permaMenu');
+            angular.element(document.getElementById('permaPin')).attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACrklEQVRoQ82a/TUFMRDF7+tACTpABeiADqgAFaACXgWoABWgAlTg6YAOnOskzsrbJDOTbLI5x/HHy9cvM3d2MrsLzKedAzh12zkDcKvZ2kLTecK+1wBOgvmPNTBzADkAcB85JDFMb5ANAB8A+D/WRDC9QZ4A7AlcNgvTE4TCvhJA+C5JmF4g2wBeFRBZmB4g1ANdijCWNmqZHiBjoVYLtAbTGiQVaotgWoJIQq0ZpiWINNSaYKYA2R3s5BvAm8uhNKFWC3NYCrIJgBun7/OvV1tZQejvPOGjXjsP1v22gDBLvcjkR635llqQmxlZwR/WHfekAZkq6litx0BC137gBBoQRp8t66qVx704iJWfVwNCgT93hqEVqE+mOf+aBoQDe8KsWWFIogXpBcNixJoVSkFawrw7LVCfyWaxiJ9waje7dHrIMfz+XgIylWU+XbqTtUIN1xrOMYVl1AesHhCxc22YHZc1i9yqhmt59/qqHJr33TOrGQjTeFZDfK22lmWagoTVEF8QqAHTFGQsE64Fo9aueoBz2lSVsAaMel/qAa5Wy5Q+1Q5dem1xs0fLtVkLIi3p8KHGQGB5aGYL1mMnqAVhhMqVOpkfsRDxd1dQhGam6TwAhnNV04BIrrm8dlI/YxuRuJkqv7KkKLxSEiTVJC6RgjFbQ/pkz70C4Ab4skaa5MVgJAcRPcica3FR6sILN5yIeiCE1qdDmN9KiEoUQeccSKpyUrq4h2FQKK5SpkBi7zHoShS06j14yWlLxsZAYuI2XXokGyntMwZCcdOlwlfGrGLQBbR6KN2jaHwIEhP3cvB5hWji1p1CEH6BMBTeLPWQS1FYweOHLb6JSzGtTz8FEr6kZAZKwc9SDzGQUNzmfKenZagRn9H+K9P33JRlbYL4HImuJM2XLGtNOuYHoM2N4m/3F6wAAAAASUVORK5CYII=');
+        }
+    }
 }])
    
 .controller('homePageCtrl', ['$scope', '$stateParams', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
@@ -157,7 +167,7 @@ function ($scope, $stateParams, $ionicLoading, $rootScope, $state, Gravatar, $io
                     }).then(function(){
                         $rootScope.user = user;
                         $rootScope.user.name = user.displayName;
-                        $rootScope.user.gravImg = user.photoURL
+                        $rootScope.user.gravImg = user.photoURL;
                         angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('hiddenMenu');
                         $ionicLoading.hide();
                         $state.go('tabsController.homePage');
@@ -259,13 +269,10 @@ function ($scope, $stateParams, shopFactory,$ionicListDelegate) {
 
 }])
    
-.controller('myAccountCtrl', ['$scope', 'authService', '$ionicPopup', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('myAccountCtrl', ['$scope', '$ionicPopup', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, authService, $ionicPopup, $timeout) {
-    $scope.user = [];
-    $scope.user = authService.getUser();
-    console.log($scope.user);
+function ($scope, $ionicPopup, $timeout) {
     
     $scope.changePasswordPopup = function(){
         $scope.passChange = {};

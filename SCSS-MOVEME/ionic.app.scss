@@ -1,6 +1,8 @@
+$dark: #1E1E1E;
 $PAGE_TRANSPARENCY: rgba(255,255,255,0.4);
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 @import "../www/lib/ionic/scss";
+@import url('https: //fonts.googleapis.com/css?family=Fira+Sans|Gloria+Hallelujah|Lobster|Pacifico|Quicksand');
 .center-form {
 	width: 290px;
 	position: absolute;
@@ -55,12 +57,18 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // FOR SIDE MENU
 @media (min-width: 767px) {
-	ion-side-menu-content: not(.hiddenMenu) {
-		-webkit-transform: translate3d(270px, 0px, 0px) !important;
-		width: calc(100% - 270px) !important;
+	ion-side-menu-content.permaMenu: not(.hiddenMenu) {
+		-webkit-transform: translate3d(275px, 0px, 0px) !important;
+		width: calc(100% - 275px) !important;
 	}
 	
-	.bar-header button.ion-navicon {
+	.bar-header.permaMenu button.ion-navicon {
+		display: none;
+	}
+	
+}
+@media (max-width: 766px) {
+	.menu-pin {
 		display: none;
 	}
 	
@@ -100,7 +108,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .grid-container {
 	width: calc(100% + 12px);
 	max-width: 1200px;
-	margin: auto -6px auto -6px;
+	margin: 4px -6px auto -6px;
 }
 
 .grid-container * {
@@ -121,7 +129,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	width: calc(16.66% - 12px);
 	/*-- our gutter --*/
 	        margin: 6px;
-	margin-top: 12px;
+	margin-top: 4px;
 }
 
 .outline, .outline * {
@@ -223,6 +231,94 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	
 	.grid-col-sm-hidden {
 		display: none;
+	}
+	
+}
+// Buttons on home page
+.cat-buttons {
+	height: 43px;
+	ion-item {
+		border: 0px !important;
+		background-color: rgb(30,30,30);
+		border-radius: 5px;
+		font-size: 1.1em;
+		text-align: center;
+		font-weight: normal;
+		color: #fff;
+		font-family: 'Pacifico', cursive;
+		height: 40px;
+		padding: 10px 5px 2px 5px;
+		&.cat-red {
+			border-bottom: 3px solid #FF0000 !important;
+		}
+		
+		&.cat-pink {
+			border-bottom: 3px solid #ff00c7 !important;
+		}
+		
+		&.cat-green {
+			border-bottom: 3px solid #04e50b !important;
+		}
+		
+		&.cat-yellow {
+			border-bottom: 3px solid #f6ff05 !important;
+		}
+		
+		&.cat-blue {
+			border-bottom: 3px solid #0519ff !important;
+		}
+		
+		&.cat-orange {
+			border-bottom: 3px solid #ff9000 !important;
+		}
+		
+	}
+}
+// CUSTOM HEADER
+.body-custom-header {
+	//margin-top: 65px !important;
+}
+
+.bar.bar-header.bar-dark {
+	background-color: #1e1e1e;
+	border-bottom: 0px solid rgb(240,29,29);
+}
+
+.my-head .title {
+	margin-left: 10px;
+}
+
+.menu-pin {
+	margin: 5px;
+	.active {
+		content: 'data: image/png;
+		base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAADv0lEQVRoQ82ajZENQRDH+yIgA0RwRIAIuAxOBIiAiwARIAJEgAgQgZOBi4D6Xc3/VRszu9Mz+/G2St29d7s7/Zv+7nFix3O9MLNnSZznZvYuItpJ5OYV731tZk+z9z+JwBwDyGMz+2BmV2bG77fN7G2CaobZG+Smmf00M35iTmiG6zwKszfIZzN7YGafkja8dYVg9gTBsV8lk8Kcfhd8sBlmL5C7ZvYtCX5mZh8nAkkTzB4g+AMmBcwbF3KnguIszB4gCrU/kn+UTKoENQmzNYhCLYLeM7PvwdxUhdkSpBZqgyzl0LwliELt12RSUYDJ0LwGCE58I62KH+ADLaE2CubN7GwUBHN5lJIZiY3P+QWIvp8Ltb0wl70gCEaR97KwsrTAn0h0t9I971PpERV26n7lo6seEFRKRtYuY/MkNP5dFlblPhb8siRB2hTJcREFoSoFhAsANLK0gHO8bAxyEMq5rjUdAVHU4eGLilnNCTH6d4QHAhjKfoLIdQMWASF5naYk9rBS5I0KWns+1wLWgGUcTDkCwsswo61hiIY0XtIC5qy+5QAeAeGhLWFYy/fx/2nBqy8KshUMWsAXCN9cvnssml8PyJowuRbISfjCbHHZC7IGDLtPZJQWQpFxBGRpGMwJkF8pR8xqYdRHchtdKgCgCSYqhNQ70Tg+qhGtR0gkwnCxk715hgKTyjksV/iBwk75rg+zoEjshSFP3U8bESp9RkEwB6YhGrBRLowkzV1A/DTED9hGfIZNoVLGR0qVdNV1RjSiSrg0DQEG84qa2Z8kaViu8ANpId+6EjbzUInj+6arxWcOTVKl05wMZD0give8OG9d8yqV0oLM3FJoanO6OskoiHfuPPOyo5gbP3VEgPO2+oz6neajhJGEKGfMRzq+/cVnCMneWedgpGU2oDbQXsy05NzkCnZdo076Zh2ZYRb8XhqDTsFog0L1VY9GNENix+TcCEbDw+emUrtiZoATHLq1weItPuKPAGS/fAcEZuDhWkokrxnMT9Vul29owTkQP6/VEYCf8EUn6lrXw/Bd6/FCd0JUJEFgRSWNg7rCpJNEMGhFo50WjRbvmdKIzjEwHZmSQuthDNO98sIP1kDycwhN9LqanoVlbtYIu45JqV7iMxe5AxNoPWHaQv7DGrlGEJ6YrkiiG4edcW2qHISQ6h3vn7Hk2sKMvN+D+HaVdzaPYkYEWOpZgfh2lXfTKOHwR+kPJXhAvHNzT3e9s9Tu9rwHEBVs+ANamPpfCD1rbPIMIOrumkaTm0jVschfqfgJ4V03DZ8AAAAASUVORK5CYII=';
+	}
+	
+}
+.full-width {
+	//ideal for subheader
+	    margin: -12px -12px auto -12px;
+	padding: 6px 6px 6px 10px;
+	width: calc(100% + 24px);
+	display: block;
+	height: 36px;
+	background-color: #1e1e1e;
+	img {
+		display: block;
+		float: left;
+	}
+	
+	p: : before {
+		content: '  ';
+	}
+	
+	p {
+		font-size: 1.1em;
+		display: block;
+		line-height: 24px;
+		vertical-align: middle;
+		color: #fff;
 	}
 	
 }

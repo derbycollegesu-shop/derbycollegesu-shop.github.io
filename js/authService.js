@@ -4,16 +4,14 @@ angular.module('authModule', [])
 
 .run(function($state, $rootScope, Gravatar, $ionicLoading, $stateParams, $timeout, $ionicHistory, $ionicTabsDelegate, $ionicSideMenuDelegate, $location, authService){
     
-    var authChanging = false;
     $rootScope.user = [];
-    console.log('Derby College SU project v1.3');
+    console.log('Derby College SU project v1.4');
    
     $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
-        if((toState.name !== 'login' && toState.name !== 'signup') && !authService.isAuthenticated() && !authChanging){
+        if((toState.name !== 'login' && toState.name !== 'signup') && !firebase.auth().currentUser) //!authService.isAuthenticated() && !authChanging)
+        {
             evt.preventDefault();
-           
             //toParams = $location.search(angular.extend($location.hash().substring($location.hash().indexOf('?') + 1)));
-            
             authService.setNextState(toState.name, toParams); 
             $timeout($state.go('login'));
         } else {
@@ -23,38 +21,29 @@ angular.module('authModule', [])
     });
     
     firebase.auth().onAuthStateChanged(function(user) {
-        authChanging= true;
-        console.log('prevented state change');
         $ionicLoading.show({
             template: '<p>Loading it...</p><ion-spinner></ion-spinner>'
         });
         if(user){ //USER LOGGED IN
-            authService.user = user;
+            //authService.user = user;
             authService.setUser(user);
-            $ionicLoading.hide();
-            //HIDE BACK BUTTON
-            console.log('going' + authService.getNextState().state);
+            $rootScope.user = authService.getUser();
             
-            //console.log('going');
+            $ionicLoading.hide();
+            
             angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('hiddenMenu');
-            //console.log('going');
             $ionicHistory.nextViewOptions({disableBack: true});
-            //console.log('going');
-            $state.go(authService.getNextState().state, authService.getNextState.params);//redirect to prev state OR home page
-
+            $state.go(authService.getNextState().state, authService.getNextState.params); //redirect to prev state OR home page
             $ionicSideMenuDelegate.canDragContent(true);
         } else { //USER HAS BEEN LOGGED OUT
             $ionicLoading.hide();
-            // User NOT logged in and not at login = direct there.
             if($state.current.name !== 'login') $state.go('login'); 
         }
-        authChanging = false;
     });
 })
 
 
 .service('authService', [function(){
-    var user_authenticated = false;
     var current_user = [];
     var logging_out = false;
     var logging_in = false;
@@ -64,9 +53,24 @@ angular.module('authModule', [])
     return {
         setUser: function(user){
             if(user){   
-                current_user = user;
-                console.log(current_user);
-                user_authenticated = true;
+                current_user = {
+                    isAdmin: false,
+                    displayName: user.displayName,
+                    email: user.email,
+                    authenticated: true,
+                    emailVerified: user.emailVerified,
+                    photoURL: user.photoURL,
+                    uid: user.uid
+                };
+                //console.log(current_user);
+                ///user_authenticated = true;
+                //console.log('getting user details');
+                firebase.database().ref('users/' + user.uid).once('value', function(snapshot){
+                    current_user.isAdmin = (snapshot.val().admin === true);
+                }).then(function(){
+                    //console.log('IsAdmin = ' + is_admin);
+                });
+                
                 return true;
             }
             console.log('user not saved!');
@@ -75,10 +79,10 @@ angular.module('authModule', [])
         getUser: function(){
             return current_user;
         },
-        user: current_user,
-        isAuthenticated: function(){
-            return user_authenticated;
-        },
+        //user: current_user,
+        // isAuthenticated: function(){
+        //     return user_authenticated;
+        // },
         setNextState: function(toState, toParams){
             if(toState === 'login') toState = 'tabsController.homePage';
             console.log('nextState: ', toState);
