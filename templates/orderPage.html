@@ -12,8 +12,8 @@
         </p>
       </ion-item>
       <ion-item class="item-divider" id="orderPage-list-item-divider1"> Items Ordered</ion-item>
-      <ion-item id="orderPage-list-item11" ng-repeat="item in order.line_items">{{item.name}}
-        <small>x {{item.quantity}}</small>
+      <ion-item id="orderPage-list-item11" ng-repeat="item in order.line_items">
+        <small ng-bind-html="item.name +' x'+ item.quantity"></small>
         <span class="item-note">£{{item.total}}</span>
       </ion-item>
       <ion-item class="item-divider" id="orderPage-list-item-divider4" ng-if="order.coupon_lines"> Coupons Used</ion-item>
