@@ -48,10 +48,12 @@ angular.module('authModule', [])
                 ///user_authenticated = true;
                 //console.log('getting user details');
                 is_authed = true;
-                firebase.database().ref('users/' + user.uid).once('value', function(snapshot){
+                firebase.database().ref('admins/' + user.uid).once('value', function(snapshot){
                     current_user.isAdmin = (snapshot.val().admin === true);
                 }).then(function(){
                     //console.log('IsAdmin = ' + is_admin);
+                }).catch(function(){
+                    //console.log('not admin');
                 });
                 
                 return true;

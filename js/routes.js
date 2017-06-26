@@ -140,6 +140,16 @@ angular.module('app.routes', [])
     }
   })
 
+  .state('tabsController.allUsers', {
+    url: '/users',
+    views: {
+      'tab3': {
+        templateUrl: 'templates/allUsers.html',
+        controller: 'allUsersCtrl'
+      }
+    }
+  })
+
 $urlRouterProvider.otherwise('/tabs/home')
 
 

@@ -4,6 +4,44 @@ angular.module('app.directives', [])
 /*
 This directive allows us to pass a function in on an enter key to do what we want.
  */
+ .filter('filterStatus', function () {
+  return function (items, statuses) {
+    var filtered = [];
+    //console.log(isAdmin);
+    angular.forEach(items, function(key, value){
+        if(statuses[key.status] === true){
+            this.push(key);
+        }
+          
+        
+    }, filtered);
+        
+    
+    return filtered;
+  };
+})
+
+.filter('userFilter', function () {
+  return function (items, type, isAdmin) {
+    var filtered = [];
+    //console.log(isAdmin);
+    angular.forEach(items, function(key, value){
+        if(key.type === type){
+          if(isAdmin) {
+              if(key.admin) this.push(key);
+          } else {
+              this.push(key);
+          }
+        }
+        
+    }, filtered);
+        
+    
+    return filtered;
+  };
+})
+ 
+ 
 .directive('ngEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {

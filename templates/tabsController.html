@@ -12,7 +12,7 @@
     <ion-tab title="My Account" icon="ion-ios-person-outline" href="#/tabs/myaccount" id="tabsController-tab6" on-select="tabIt('tabsController.myAccount')" hidden="true">
       <ion-nav-view name="tab6"></ion-nav-view>
     </ion-tab>
-    <ion-tab title="Admin" icon="ion-ios-cloud-outline" href="#/tabs/admin" id="tabsController-tab3" ng-show="$root.user.admin===true" on-select="tabIt('tabsController.adminPage')">
+    <ion-tab title="Admin" icon="ion-ios-cloud-outline" href="#/tabs/admin" id="tabsController-tab3" hidden="{{$root.user.isAdmin !== true}}" on-select="tabIt('tabsController.adminPage')">
       <ion-nav-view name="tab3"></ion-nav-view>
     </ion-tab>
     <ion-tab title="Notifications" icon="ion-android-notifications-none" href="#/tabs/notifications" id="tabsController-tab4" class="&quot; badge=&quot;badges.notifications&quot; badge-style=&quot;badge-assertive" ng-if="$root.badges.notifications > 0"

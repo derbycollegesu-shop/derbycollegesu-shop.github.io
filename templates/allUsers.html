@@ -1,0 +1,18 @@
+<ion-view title="All Users" id="page14">
+  <ion-content padding="true" class="has-header">
+    <ion-list id="allUsers-list16">
+      <ion-toggle toggle-class="toggle-positive" id="allUsers-toggle5" ng-model="onlyAdmins">Show Only Admins</ion-toggle>
+      <ion-item class="item-divider" id="allUsers-list-item-divider7"> Staff</ion-item>
+      <ion-item class="item-icon-right" id="allUsers-list-item35" ng-repeat="user in users | userFilter:'staff':onlyAdmins">{{user.displayName}}
+        <i class="icon ion-ios-personadd-outline" ng-if="user.admin"></i>
+        <ion-option-button class="button-positive" ng-click="makeAdmin(user.key)" ng-if="!user.admin">Make Admin</ion-option-button>
+      </ion-item>
+      <ion-item class="item-divider" id="allUsers-list-item-divider8"> Students</ion-item>
+      <ion-item class="item-icon-right" id="allUsers-list-item38" ng-repeat="user in users | userFilter:'student':onlyAdmins">{{user.displayName}}
+        <small>({{user.collegeid}})</small>
+        <i class="icon ion-ios-personadd-outline" ng-if="user.admin"></i>
+        <ion-option-button class="button-positive" ng-click="makeAdmin(user.key)" ng-if="!user.admin">Make Admin</ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

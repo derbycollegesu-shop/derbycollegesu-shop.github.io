@@ -159,11 +159,17 @@ function ($scope, $stateParams, $ionicLoading, $rootScope, $state, Gravatar, $io
                     displayName: $scope.userdetails.name,
                     photoURL: Gravatar.get(user.email, 200)
                 }).then (function(){
+                    var studentorstaff = 'student'
+                    if($scope.userdetails.staffLogon){
+                        studentorstaff = 'staff';
+                    }
                     firebase.database().ref('users/'+user.uid).set({
+                        collegeid: user.collegeid,
                         key: user.uid,
                         email: user.email,
                         name: user.displayName,
-                        displayName: user.displayName
+                        displayName: user.displayName,
+                        type: studentorstaff
                     }).then(function(){
                         $rootScope.user = user;
                         $rootScope.user.name = user.displayName;
@@ -187,6 +193,14 @@ function ($scope, $stateParams, $ionicLoading, $rootScope, $state, Gravatar, $io
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams, dataService, $timeout, $ionicLoading) {
+    $scope.statuses = {};
+    $scope.statuses = {
+        'completed': false,
+        'processing': true,
+        'on-hold': false,
+        'cancelled': false
+        
+    };
     $ionicLoading.show({
         template: '<p>Loading...</p><ion-spinner></ion-spinner>'
     });
@@ -200,6 +214,14 @@ function ($scope, $stateParams, dataService, $timeout, $ionicLoading) {
     });
     $scope.logout = function(){
         firebase.auth().signOut();
+    };
+    $scope.toggleStatus = function(status){
+        $scope.statuses[status] = !$scope.statuses[status];
+        this.color = 'danger';
+        return 'danger';
+    };
+    $scope.icon = function(type){
+        if($scope.statuses[type]){ return 'color:#22EE22'; } else { return 'color:#777777'; }
     };
     
 }])
@@ -220,7 +242,7 @@ function ($state, $scope, $stateParams, Gravatar, $timeout, $ionicLoading, authS
     $ionicLoading.show({
         template: '<p>Loading...</p><ion-spinner></ion-spinner>'
     });
-    firebase.database().ref('newOrders/' + $stateParams.id).once('value', function(snapshot){
+    firebase.database().ref('newOrders/' + $stateParams.id).on('value', function(snapshot){
         $scope.order = [];
         $scope.order = snapshot.val();
         $scope.gravImg = Gravatar.get($scope.order.billing.email, 100);
@@ -233,8 +255,28 @@ function ($state, $scope, $stateParams, Gravatar, $timeout, $ionicLoading, authS
             $ionicLoading.hide();
         });
     });
-        
-}])
+       
+    $scope.toggleStatus = function(key){
+        $scope.order.line_items[key].got = !$scope.order.line_items[key].got;
+        console.log($scope.order.line_items[key].got);
+        firebase.database().ref('newOrders/' + $stateParams.id +'/line_items/' + key).update({got:$scope.order.line_items[key].got});
+    };
+    
+    $scope.getColor = function(key){
+        if($scope.order.line_items[key].got){
+            return 'text-decoration: line-through; color: green';
+        } else {
+            return '';
+        }
+    };
+}
+
+
+
+
+
+
+])
    
 .controller('productSectionsCtrl', ['$scope', '$stateParams', 'shopFactory', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
@@ -404,6 +446,23 @@ function ($scope, $stateParams) {
             text: "Text about the Personal Coach Team"
         }
     ];
+
+}])
+   
+.controller('allUsersCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+    $scope.users = [];
+    firebase.database().ref('users').on('value', function(snapshot){
+        $scope.users = snapshot.val();
+    });
+    
+    $scope.makeAdmin = function(uid){
+        firebase.database().ref('admins/' + uid).set({admin:true});
+        firebase.database().ref('users/'+uid).update({admin:true});
+        console.log('made '+uid+' admin');
+    };
 
 }])
  

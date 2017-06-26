@@ -1,7 +1,13 @@
 <ion-view title="Orders Page" cache-view="false" id="page7">
   <ion-content padding="true" class="has-header">
+    <div id="ordersPage-button-bar1" class="button-bar">
+      <button id="ordersPage-button12" ng-click="toggleStatus('cancelled')" style="{{icon('cancelled')}};" class="button button-light button-block icon ion-close-circled"></button>
+      <button id="ordersPage-button13" ng-click="toggleStatus('on-hold')" style="{{icon('on-hold')}};font-weight:lighter;" class="button button-light button-block icon ion-android-remove-circle"></button>
+      <button id="ordersPage-button15" ng-click="toggleStatus('processing')" style="{{icon('processing')}};font-weight:lighter;" class="button button-light button-block icon ion-help-circled"></button>
+      <button id="ordersPage-button14" ng-click="toggleStatus('completed')" style="{{icon('completed')}};" class="button button-light button-block icon ion-checkmark-circled"></button>
+    </div>
     <ion-list id="ordersPage-list1">
-      <ion-item id="ordersPage-list-item4" ui-sref="tabsController.orderPage({&quot;id&quot;:&quot;&quot;+order.id+&quot;&quot;})" ng-repeat="order in orders | orderBy:id:true">{{order.number}} ({{order.customer}})
+      <ion-item id="ordersPage-list-item4" ui-sref="tabsController.orderPage({&quot;id&quot;:&quot;&quot;+order.id+&quot;&quot;})" ng-repeat="order in orders | filterStatus:statuses">{{order.number}} ({{order.customer}})
         <span class="item-note">{{order.site}} - {{order.status}}</span>
       </ion-item>
     </ion-list>
