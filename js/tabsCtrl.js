@@ -5,11 +5,20 @@ angular.module('app.tabs', [])
 .controller('tabsCtrl', function($scope, $state, $ionicTabsDelegate, $ionicHistory){ 
     var prevTab = 0;
     
-    $scope.tabIt = function(tabStateName){   
-        if(prevTab === $ionicTabsDelegate.selectedIndex()) {
+    $scope.setPrevTab = function(){
+        prevTab = $ionicTabsDelegate.selectedIndex();
+    };
+    
+    $scope.tabIt = function(tabIndex, tabStateName){   
+        //console.log('Clicked Tab ' + tabIndex);
+        //console.log($ionicTabsDelegate.selectedIndex());
+        if(prevTab === tabIndex) {
+            //console.log('trying to go back to ' + tabStateName);
             $ionicHistory.nextViewOptions({disableBack: true});
             $state.go(tabStateName);
-            prevTab = $ionicTabsDelegate.selectedIndex();
+            //console.log('trying to go back');
+        } else {
+            $ionicTabsDelegate.select(tabIndex);
         }
     };
 });

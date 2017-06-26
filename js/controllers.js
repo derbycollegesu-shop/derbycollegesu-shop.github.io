@@ -230,14 +230,14 @@ function ($scope, $stateParams, dataService, $timeout, $ionicLoading) {
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($state, $scope, $stateParams, Gravatar, $timeout, $ionicLoading, authService, $location) {
-    var p = $location.search(angular.extend($location.hash().substring($location.hash().indexOf('?') + 1)));
-    console.log('params: ' +p);
-    if($stateParams.id === '' && p.id === null){
-        //$state.go('tabsController.ordersPage');
-        return;
-    }
+    // var p = $location.search(angular.extend($location.hash().substring($location.hash().indexOf('?') + 1)));
+    // console.log('params: ' +p);
+    // if($stateParams.id === '' && p.id === null){
+    //     //$state.go('tabsController.ordersPage');
+    //     return;
+    // }
     
-    console.log($stateParams);
+    // console.log($stateParams);
 
     $ionicLoading.show({
         template: '<p>Loading...</p><ion-spinner></ion-spinner>'
