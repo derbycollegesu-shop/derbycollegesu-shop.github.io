@@ -16,20 +16,17 @@ angular.module('firebaseConfig', ['firebase'])
         $ionicLoading.show({
             template: '<p>Loading it...</p><ion-spinner></ion-spinner>'
         });
+        authService.setUser(user);
         if(user){ //USER LOGGED IN
-            authService.setUser(user);
             $rootScope.user = authService.getUser();
             
-            $ionicLoading.hide();
-            
             angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('hiddenMenu');
-           // OLD = $ionicHistory.nextViewOptions({disableBack: true});$state.go(authService.getNextState().state, authService.getNextState.params); //redirect to prev state OR home page
-            if($state.current.name ==='login') $state.go(authService.getNextState().state,authService.getNextState().params); // $state.go('tabsController.homePage'); // = NEW
-            $ionicSideMenuDelegate.canDragContent(true);
-        } else { //USER HAS BEEN LOGGED OUT
-            authService.setUser(user);
             $ionicLoading.hide();
+            if($state.current.name ==='login') $state.go(authService.getNextState().state,authService.getNextState().params); 
+            $ionicSideMenuDelegate.canDragContent(true);
+        } else {
             $timeout(function(){
+                $ionicLoading.hide();
                 authService.setNextState($state.current.name, $stateParams); 
                 if($state.current.name !== 'login') $state.go('login'); 
             });
