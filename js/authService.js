@@ -6,40 +6,18 @@ angular.module('authModule', [])
     
     $rootScope.user = [];
     console.log('Derby College SU project v1.4');
-   
+    // $timeout();
+    
     $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
-        if((toState.name !== 'login' && toState.name !== 'signup') && !firebase.auth().currentUser) //!authService.isAuthenticated() && !authChanging)
+        if((toState.name !== 'login' && toState.name !== 'signup') && authService.isAuthed() === false) 
         {
             evt.preventDefault();
-            //toParams = $location.search(angular.extend($location.hash().substring($location.hash().indexOf('?') + 1)));
             authService.setNextState(toState.name, toParams); 
             $timeout($state.go('login'));
-        } else {
-            
-            //authService.setNextState(, toParams); 
-        }   // REdIRECT TO LOGIN PAGE IF NOT THERE AND USER NOT LOGGED IN
-    });
-    
-    firebase.auth().onAuthStateChanged(function(user) {
-        $ionicLoading.show({
-            template: '<p>Loading it...</p><ion-spinner></ion-spinner>'
-        });
-        if(user){ //USER LOGGED IN
-            //authService.user = user;
-            authService.setUser(user);
-            $rootScope.user = authService.getUser();
-            
-            $ionicLoading.hide();
-            
-            angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('hiddenMenu');
-            $ionicHistory.nextViewOptions({disableBack: true});
-            $state.go(authService.getNextState().state, authService.getNextState.params); //redirect to prev state OR home page
-            $ionicSideMenuDelegate.canDragContent(true);
-        } else { //USER HAS BEEN LOGGED OUT
-            $ionicLoading.hide();
-            if($state.current.name !== 'login') $state.go('login'); 
         }
     });
+    
+    
 })
 
 
@@ -49,8 +27,12 @@ angular.module('authModule', [])
     var logging_in = false;
     var nextState = 'tabsController.homePage'; // State in which to move on to when logged in
     var nextParams = {}; // Params to pass on redirect
+    var is_authed = null;
     
     return {
+        isAuthed: function(){
+            return is_authed;
+        },
         setUser: function(user){
             if(user){   
                 current_user = {
@@ -65,6 +47,7 @@ angular.module('authModule', [])
                 //console.log(current_user);
                 ///user_authenticated = true;
                 //console.log('getting user details');
+                is_authed = true;
                 firebase.database().ref('users/' + user.uid).once('value', function(snapshot){
                     current_user.isAdmin = (snapshot.val().admin === true);
                 }).then(function(){
@@ -73,6 +56,7 @@ angular.module('authModule', [])
                 
                 return true;
             }
+            is_authed = false;
             console.log('user not saved!');
             return false;
         },

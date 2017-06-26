@@ -140,7 +140,7 @@ angular.module('app.routes', [])
     }
   })
 
-$urlRouterProvider.otherwise('/tabs/notifications')
+$urlRouterProvider.otherwise('/tabs/home')
 
 
 });
