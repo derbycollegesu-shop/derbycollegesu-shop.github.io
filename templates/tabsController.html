@@ -9,14 +9,17 @@
     <ion-tab title="Enrichment" icon="ion-ios-calendar-outline" href="#/tabs/enrichment" id="tabsController-tab5" ng-click="tabIt(2,'tabsController.enrichment')" on-select="setPrevTab()">
       <ion-nav-view name="tab5"></ion-nav-view>
     </ion-tab>
-    <ion-tab title="Admin" icon="ion-ios-cloud-outline" href="#/tabs/admin" id="tabsController-tab3" hidden="{{$root.user.isAdmin !== true}}" ng-click="tabIt(3,'tabsController.adminPage')" on-select="setPrevTab()">
+    <ion-tab title="Events" icon="ion-ios-football" href="#/tabs/events" id="tabsController-tab7" ng-click="tabIt(3,'tabsController.events Route Parameters')" on-select="setPrevTab()">
+      <ion-nav-view name="tab7"></ion-nav-view>
+    </ion-tab>
+    <ion-tab title="Admin" icon="ion-ios-cloud-outline" href="#/tabs/admin" id="tabsController-tab3" hidden="{{$root.user.isAdmin !== true}}" ng-click="tabIt(4,'tabsController.adminPage')" on-select="setPrevTab()">
       <ion-nav-view name="tab3"></ion-nav-view>
     </ion-tab>
-    <ion-tab title="My Account" icon="ion-ios-person-outline" href="#/tabs/myaccount" id="tabsController-tab6" ng-click="tabIt(4,'tabsController.myAccount')" hidden="true" on-select="setPrevTab()">
+    <ion-tab title="My Account" icon="ion-ios-person-outline" href="#/tabs/myaccount" id="tabsController-tab6" ng-click="tabIt(5,'tabsController.myAccount')" hidden="true" on-select="setPrevTab()">
       <ion-nav-view name="tab6"></ion-nav-view>
     </ion-tab>
     <ion-tab title="Notifications" icon="ion-android-notifications-none" href="#/tabs/notifications" id="tabsController-tab4" class="&quot; badge=&quot;badges.notifications&quot; badge-style=&quot;badge-assertive" ng-if="$root.badges.notifications > 0"
-      ng-click="tabIt(5,'tabsController.notifications')" on-select="setPrevTab()">
+      ng-click="tabIt(6,'tabsController.notifications')" on-select="setPrevTab()">
       <ion-nav-view name="tab4"></ion-nav-view>
     </ion-tab>
   </ion-tabs>

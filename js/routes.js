@@ -150,6 +150,16 @@ angular.module('app.routes', [])
     }
   })
 
+  .state('tabsController.events', {
+    url: '/events',
+    views: {
+      'tab7': {
+        templateUrl: 'templates/events.html',
+        controller: 'eventsCtrl'
+      }
+    }
+  })
+
 $urlRouterProvider.otherwise('/tabs/home')
 
 

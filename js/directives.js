@@ -1,5 +1,18 @@
 angular.module('app.directives', [])
 
+// .directive('dynamicSlides', function () {
+//         return {
+//             require: ['^ionSlideBox'],
+//             link: function (scope, elem, attrs, slider) {
+//                 scope.$watch(function () {
+//                     return scope.$eval(attrs.dynamicSlides).length;
+//                 }, function () {
+//                     slider[0].__slider.update();
+//                 });
+//             }
+//         };
+//     })
+
 
 /*
 This directive allows us to pass a function in on an enter key to do what we want.
@@ -7,16 +20,12 @@ This directive allows us to pass a function in on an enter key to do what we wan
  .filter('filterStatus', function () {
   return function (items, statuses) {
     var filtered = [];
-    //console.log(isAdmin);
     angular.forEach(items, function(key, value){
+        //console.log(key.id, key.status, statuses[key.status]);
         if(statuses[key.status] === true){
             this.push(key);
         }
-          
-        
     }, filtered);
-        
-    
     return filtered;
   };
 })
@@ -33,10 +42,7 @@ This directive allows us to pass a function in on an enter key to do what we wan
               this.push(key);
           }
         }
-        
     }, filtered);
-        
-    
     return filtered;
   };
 })

@@ -1,7 +1,7 @@
 <ion-view title="Order Page" cache-view="false" id="page8">
   <ion-content padding="true" class="has-header">
     <div class="list card" id="orderPage-card21" ng-if="order">
-      <ion-item class="item-thumbnail-left" id="orderPage-list-item9">
+      <ion-item class="item-thumbnail-left item-icon-right" id="orderPage-list-item9" href-inappbrowser="http://shop.dcsu.co.uk/wp-admin/post.php?post={{order.id}}&amp;action=edit">
         <img src="{{gravImg}}">
         <h2>Order #{{order.number}}</h2>
         <p>
@@ -10,6 +10,11 @@
               <br>Deliver to: {{order.customer_note}}</small>
           </small>
         </p>
+        <small>
+          <small>
+            <i class="icon ion-ios-redo-outline"></i>
+          </small>
+        </small>
       </ion-item>
       <ion-item class="item-divider" id="orderPage-list-item-divider1"> Items Ordered</ion-item>
       <ion-item id="orderPage-list-item11" ng-repeat="item in order.line_items track by $index" ng-click="toggleStatus($index)" style="{{getColor($index)}}">

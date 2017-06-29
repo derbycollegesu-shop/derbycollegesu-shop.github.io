@@ -27,8 +27,11 @@ angular.module('firebaseConfig', ['firebase'])
         } else {
             $timeout(function(){
                 $ionicLoading.hide();
-                authService.setNextState($state.current.name, $stateParams); 
-                if($state.current.name !== 'login') $state.go('login'); 
+                
+                if($state.current.name !== 'login') {
+                    authService.setNextState($state.current.name, $stateParams); 
+                    $state.go('login'); 
+                }
             });
         }
     });

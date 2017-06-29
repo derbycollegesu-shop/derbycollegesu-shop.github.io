@@ -217,8 +217,7 @@ function ($scope, $stateParams, dataService, $timeout, $ionicLoading) {
     };
     $scope.toggleStatus = function(status){
         $scope.statuses[status] = !$scope.statuses[status];
-        this.color = 'danger';
-        return 'danger';
+        //console.log($scope.statuses[status]);
     };
     $scope.icon = function(type){
         if($scope.statuses[type]){ return 'color:#22EE22'; } else { return 'color:#777777'; }
@@ -258,7 +257,7 @@ function ($state, $scope, $stateParams, Gravatar, $timeout, $ionicLoading, authS
        
     $scope.toggleStatus = function(key){
         $scope.order.line_items[key].got = !$scope.order.line_items[key].got;
-        console.log($scope.order.line_items[key].got);
+        //console.log($scope.order.line_items[key].got);
         firebase.database().ref('newOrders/' + $stateParams.id +'/line_items/' + key).update({got:$scope.order.line_items[key].got});
     };
     
@@ -464,5 +463,127 @@ function ($scope, $stateParams) {
         console.log('made '+uid+' admin');
     };
 
+}])
+   
+.controller('eventsCtrl', ['$scope', '$stateParams', '$ionicSlideBoxDelegate', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams, $ionicSlideBoxDelegate, $timeout) {
+    
+    $scope.datar = [];
+    $scope.curIndex = 0;
+    
+    moment.locale('en');
+    moment.updateLocale('en', {
+        monthsShort : [
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ],
+        weekdaysShort : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    });
+    
+    
+    var d = moment();
+    
+    for(i = -5; i < 14; i++){
+        e = d.clone().add(i,'days');
+        $scope.datar.push({
+            dday: moment.weekdaysShort(e.day()),
+            ddate: e.date(),
+            dmonth: moment.monthsShort(e.month()),
+            ddtest: e.day()
+        });
+    }
+//console.log($scope.datar);
+$scope.options = {
+        loop: false,
+        speed: 500,
+        slidesPerView: 7,
+        initialSlide: 3,
+        pagination: 'none',
+        autoplayDisableOnInteraction: false,
+        spaceBetween: 3,
+        centeredSlides: true,
+        effect: 'slide',
+        //slideActiveClass: 'slideActive-Class'
+      };
+      
+      
+  var curIndex; 
+  var startIndex;
+  var dir;
+  var prevX = 0;
+  
+
+$scope.$on("$ionicSlides.sliderInitialized", function(event, data){
+  // data.slider is the instance of Swiper
+  $scope.slider = data.slider;
+  console.log(data.slider);
+  $scope.curIndex = data.slider.activeIndex;
+  data.slider.on('touchStart', function(e){
+      curIndex = e.snapIndex;
+      prevX = e.touches.diff; // SET INITIAL POSITION OF TOUCH
+      startIndex = e.snapIndex; //START INDEX IS ALWAYS 0x
+      $scope.curIndex = curIndex;
+     // dir = e.swipeDirection;
+      //console.log('Touch Started',curIndex,dir);
+  }).on('touchMove',function(e){
+        if(e.touches.diff < prevX){
+            if((e.snapGrid[curIndex+1]-e.snapGrid[startIndex]) + e.touches.diff <= 15){
+                curIndex = curIndex + 1;   
+                $scope.curIndex = curIndex;
+                $timeout(function(){
+                    $scope.$apply();
+                });
+            } 
+        } else {
+            if((e.snapGrid[curIndex-1]-e.snapGrid[startIndex]) + e.touches.diff >= -15){
+                curIndex = curIndex - 1;   
+                $scope.curIndex = curIndex;
+                $timeout(function(){
+                    $scope.$apply();
+                });
+            }
+        }
+        prevX = e.touches.diff;
+  }).on('touchEnd',function(e){
+    //   curIndex = e.snapIndex;
+    //   $scope.curIndex = e.snapIndex;
+    //   $timeout(function(){
+    //                 $scope.$apply();
+    //             });
+  });
+  
+});
+
+$scope.$on("$ionicSlides.slideChangeStart", function(event, data){
+});
+
+$scope.$on("$ionicSlides.slideChangeEnd", function(event, data){
+  $scope.activeIndex = data.slider.activeIndex;
+  $scope.previousIndex = data.slider.previousIndex;
+  $scope.curIndex = data.slider.activeIndex;
+  curIndex = data.slider.activeIndex;
+  $timeout(function(){
+                    $scope.$apply();
+                });
+});
+
+function dataChangeHandler(){
+  if ( $scope.slider ){
+    $scope.slider.updateLoop();
+  }
+}
+
+$scope.moveTo = function(ind){
+        dataChangeHandler();
+        $timeout(function(){
+            $scope.slider.slideTo(ind);
+        },200);
+    };
+    
+    $timeout(function(){
+        $scope.$apply()},600);
+    
 }])
  

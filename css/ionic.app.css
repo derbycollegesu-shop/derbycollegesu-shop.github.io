@@ -9800,6 +9800,48 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+.swiper-slide.swiper-slide-active h3 {
+  color: #000000 !important; }
+
+.myCal {
+  width: 100%;
+  display: block; }
+
+.myCal-day {
+  border-radius: 5px;
+  background-color: gray;
+  width: calc(14.2% - 6px);
+  margin: 3px;
+  float: left; }
+  .myCal-day h1 {
+    font-size: 1.2em;
+    text-align: center;
+    font-weight: bold;
+    line-height: 1.4em; }
+  .myCal-day,
+  .myCal-day p {
+    font-size: 1em;
+    text-align: center;
+    line-height: 0.8em; }
+
+.myCal:before,
+.myCal:after {
+  content: "";
+  display: table;
+  clear: both; }
+
+.myCal-day:first-of-type {
+  margin-left: auto; }
+
+.myCal-day:last-of-type {
+  margin-right: auto; }
+
+.loginInput:first-of-class {
+  border-radius: 6px 6px 0px 0px; }
+
+.loginInput:last-of-class {
+  border-radius: 0px 0px 6px 6px; }
+
 .center-form {
   width: 290px;
   position: absolute;
