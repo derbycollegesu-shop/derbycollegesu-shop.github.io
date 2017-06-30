@@ -1,6 +1,6 @@
 angular.module('firebaseConfig', ['firebase'])
 
-.run(function($state, $rootScope, Gravatar, $ionicLoading, $stateParams, $timeout, $ionicHistory,$ionicTabsDelegate, authService){
+.run(function($state, $rootScope, Gravatar, $ionicLoading, $stateParams, $timeout, $ionicHistory,$ionicTabsDelegate, authService, $ionicSideMenuDelegate){
     
   // Initialize Firebase
   var config = {
@@ -22,12 +22,11 @@ angular.module('firebaseConfig', ['firebase'])
             
             angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('hiddenMenu');
             $ionicLoading.hide();
-            if($state.current.name ==='login') {
-                console.log('Moving to ',authService.getNextState());
-                $state.go(authService.getNextState().state,authService.getNextState().params); 
+            $ionicSideMenuDelegate.canDragContent(true);
+            if($state.current.name === 'login' || $state.current.name === 'signup') {
+                $state.go(authService.getNextState().state, authService.getNextState().params); 
             }
                 
-            $ionicSideMenuDelegate.canDragContent(true);
         } else {
             $timeout(function(){
                 $ionicLoading.hide();

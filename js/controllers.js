@@ -122,7 +122,7 @@ function ($scope, $stateParams, $ionicLoading, $ionicHistory, $timeout, $locatio
             var errorMessage = error.message;
             if (errorCode === 'auth/wrong-password') $scope.loginError = "Wrong Password!";  
             if (errorCode === 'auth/user-not-found') $scope.loginError = "User not found!";
-        });
+        }).then(function(){console.log('logged in')});
     };
     
     //console.log($location.search());
