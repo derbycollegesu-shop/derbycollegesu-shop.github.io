@@ -1,15 +1,15 @@
 <ion-view title="Events" id="page15">
   <ion-content padding="true" class="has-header">
     <center ng-if="datar">
-      <p>jj{{datar[curIndex].dday}}</p>
+      <p ng-bind="datePicker.getDay()"></p>
     </center>
-    <ion-slides disable-side-menu-drag="" options="options" slider="data.slider" delegate-handle="my-slider" id="events-slider2" style="margin-top: -10px;width:calc(100% + 20px);height:30px;margin-left:-10px;">
-      <ion-slide-page id="events-slide27" ng-repeat="d in datar track by $index" ng-click="moveTo($index)" style="background-color:#FFFFFF;">
+    <ion-slides disable-side-menu-drag="" options="datePicker.options" slider="data.slider" delegate-handle="my-slider" id="events-slider2" style="margin-top: -10px;width:calc(100% + 20px);height:30px;margin-left:-10px;">
+      <ion-slide-page id="events-slide27" ng-repeat="d in datePicker.dateData track by $index" ng-click="datePicker.moveTo($index)" style="background-color:#FFFFFF;">
         <h3 id="events-heading8" style="color:#C0C0C0;text-align:center;">{{d.ddate}}</h3>
       </ion-slide-page>
     </ion-slides>
     <center>
-      <p>{{datar[curIndex].dmonth}}</p>
+      <p>{{datePicker.getMonth()}}</p>
     </center>
     <p ng-bind="curIndex"></p>
   </ion-content>

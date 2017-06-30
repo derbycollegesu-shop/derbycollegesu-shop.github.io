@@ -22,7 +22,11 @@ angular.module('firebaseConfig', ['firebase'])
             
             angular.element(document.getElementsByTagName('ion-side-menu-content')).removeClass('hiddenMenu');
             $ionicLoading.hide();
-            if($state.current.name ==='login') $state.go(authService.getNextState().state,authService.getNextState().params); 
+            if($state.current.name ==='login') {
+                console.log('Moving to ',authService.getNextState());
+                $state.go(authService.getNextState().state,authService.getNextState().params); 
+            }
+                
             $ionicSideMenuDelegate.canDragContent(true);
         } else {
             $timeout(function(){
